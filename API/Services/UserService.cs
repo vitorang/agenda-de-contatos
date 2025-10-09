@@ -14,7 +14,7 @@ namespace API.Services
     {
         public async Task<bool> CheckUsernameInUse(string username)
         {
-            return await userRepository.Find(username: username) == null;
+            return await userRepository.Find(username: username) != null;
         }
 
         public async Task Create(LoginDto loginDto)

@@ -28,10 +28,11 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
-        public IActionResult UsernameInUse([FromBody] LoginDto loginDto)
+        [HttpGet]
+        public async Task<IActionResult> UsernameInUse(string username)
         {
-            throw new NotImplementedException();
+            var used = await userService.CheckUsernameInUse(username);
+            return Ok(used);
         }
     }
 }
