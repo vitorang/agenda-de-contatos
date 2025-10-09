@@ -4,12 +4,14 @@ namespace API.Repositories.Interfaces
 {
     public interface IContactRepository
     {
-        public Task Save(Contact contact);
+        public Task Create(Contact contact);
 
-        public Task Delete(string ContactId);
+        public Task Update(Contact contact);
 
-        public Task<Contact> Get(string ContactId);
+        public Task Delete(string contactId);
 
-        public Task<List<Contact>> List();
+        public Task<Contact?> Get(string userId, string contactId, bool withData = false);
+
+        public Task<List<Contact>> List(string userId);
     }
 }

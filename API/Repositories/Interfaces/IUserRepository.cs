@@ -2,7 +2,7 @@
 
 namespace API.Repositories.Interfaces
 {
-    public interface IAccountRepository
+    public interface IUserRepository
     {
         public Task<User?> Find(string username);
 

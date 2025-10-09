@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,20 +7,24 @@ namespace API.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController(IUserService userService) : ControllerBase
     {
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
         {
-            throw new NotImplementedException();
+            var authToken = await userService.GetLoginToken(loginDto);
+            return Ok(authToken);
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Register([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> RegisterAsync([FromBody] LoginDto loginDto)
         {
-            throw new NotImplementedException();
+            await userService.Create(loginDto);
+
+            var authToken = await userService.GetLoginToken(loginDto);
+            return Ok(authToken);
         }
 
         [AllowAnonymous]

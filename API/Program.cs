@@ -1,3 +1,11 @@
+using API.Middlewares;
+using API.Models.ProgramSettings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,24 +28,71 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.Scan(scan => scan
     .FromAssemblies(typeof(Program).Assembly)
-    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Service") || type.Name.EndsWith("Repository")))
+    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Service") || type.Name.EndsWith("Repository") || type.Name.EndsWith("Context")))
     .AsMatchingInterface()
     .WithScopedLifetime());
 
 
+#region MongoDB
+var mongoSettings = builder.Configuration.GetSection("MongoDB").Get<MongoDBSettings>()!;
+
+builder.Services.AddSingleton<IMongoClient>(s =>
+    new MongoClient(mongoSettings.ConnectionString));
+
+builder.Services.AddSingleton<IMongoDatabase>(s =>
+    s.GetRequiredService<IMongoClient>().GetDatabase(mongoSettings.DatabaseName)
+);
+
+#endregion
+
+
+#region JWT
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("Jwt"));
+
+var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()!;
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = jwtSettings.Issuer,
+            ValidAudience = jwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
+        };
+    });
+
+
+builder.Services.AddAuthorizationBuilder()
+    .SetFallbackPolicy(new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build());
+
+
+#endregion
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
 
-app.UseHttpsRedirection();
+app.UseSwaggerUI();
+
+// app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

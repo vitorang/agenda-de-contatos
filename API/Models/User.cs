@@ -1,8 +1,13 @@
-﻿namespace API.Models
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace API.Models
 {
     public class User
     {
-        required public string Id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; } = string.Empty;
 
         required public string Username { get; set; }
 
