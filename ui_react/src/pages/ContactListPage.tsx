@@ -1,4 +1,4 @@
-import { AppBar, Avatar, CircularProgress, Container, IconButton, List, ListItemAvatar, ListItemButton, ListItemText, Paper, Skeleton, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Card, CardContent, Container, IconButton, List, ListItemAvatar, ListItemButton, ListItemText, Skeleton, Stack, Toolbar, Typography } from "@mui/material";
 import { ErrorOutline, PersonAdd, PlaylistRemove } from "@mui/icons-material";
 import AppHeaderMoreButton from "../components/AppHeaderMoreButton";
 import { useState } from "react";
@@ -10,22 +10,19 @@ import { useNavigate } from "react-router";
 
 
 export default function ContactListPage() {
-    const [status, setStatus] = useState(RequestStatus.SUCCESS);
-    const [contacts, setContacts] = useState([
-        {id: '1', name: 'AEMOMAOSMAOS'},
-        {id: '2', name: 'asdasdasd'},
-        {id: '3', name: 'ewqr wetr'},
-        {id: '4', name: 'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM'}
-
-    ] as SimpleContact[]);
+    const [status, setStatus] = useState(RequestStatus.LOADING);
+    const [contacts, setContacts] = useState([] as SimpleContact[]);
    
 
     return <>
         <PageAppHeader />
         <Container maxWidth="md" className="pageMargin">
-            <Paper elevation={1}>
-                <ContactList contacts={contacts} status={status} />
-            </Paper>
+            <Card>
+                <CardContent>
+                    <ContactList contacts={contacts} status={status} />
+                </CardContent>
+            </Card>
+            
         </Container>
     </>;
 }
@@ -48,21 +45,31 @@ function PageAppHeader() {
     );
 }
 
-interface IContactListProps
+interface ContactListProps
 {
     contacts: SimpleContact[]
     status: RequestStatus
 }
 
-function ContactList({contacts, status}: IContactListProps) {
+function ContactList({contacts, status}: ContactListProps) {
     var navigate = useNavigate();
 
     if (status == RequestStatus.LOADING)
     {
         return (
-            <Center>
-                <CircularProgress/>
-            </Center>
+            <List>
+                {
+                    Array.from(Array(5)).map((_, index) => (
+                        <ListItemButton key={index} disabled={true}>
+                            <ListItemAvatar>
+                                <Skeleton variant="circular" width={40} height={40} />
+                            </ListItemAvatar>
+                            
+                            <Skeleton  width={'100%'} height={40} />
+                        </ListItemButton>       
+                    ))
+                }
+            </List>
         );
     }
 
@@ -87,7 +94,7 @@ function ContactList({contacts, status}: IContactListProps) {
                     <Center>
                         <PlaylistRemove sx={{fontSize: '120px'}}/>
                     </Center>
-                    <Typography variant="subtitle1">Nenhum contato adicionado</Typography>
+                    <Typography variant="subtitle1">Nenhum contato encontrado</Typography>
                 </Stack>
             </Center>
         );

@@ -1,0 +1,1 @@
+export const w100 = {width: '100%'};

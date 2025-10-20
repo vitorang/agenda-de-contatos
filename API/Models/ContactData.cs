@@ -21,8 +21,6 @@ namespace API.Models
 
     public class ContactAddresses
     {
-        required public string PostalCode { get; set; }
-
         required public string State { get; set; }
 
         required public string City { get; set; }

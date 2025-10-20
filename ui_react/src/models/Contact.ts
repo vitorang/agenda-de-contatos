@@ -9,7 +9,6 @@ export default interface Contact
 
 export interface Address
 {
-    postalCode: string
     state: string
     city: string
     neighborhood: string

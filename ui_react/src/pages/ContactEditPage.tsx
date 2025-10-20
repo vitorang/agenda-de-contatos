@@ -1,7 +1,7 @@
 import { AppBar, Avatar, Card, CardContent, Container, Grid, IconButton, Stack, TextField, Toolbar, Typography } from "@mui/material";
 import { ChevronLeft, PersonRemove } from "@mui/icons-material";
 import AppHeaderMoreButton from "../components/AppHeaderMoreButton";
-import { newAddress, type Address } from "../models/Contact";
+import { type Address } from "../models/Contact";
 import Center from "../components/Center";
 import { useState } from "react";
 import type Contact from "../models/Contact";
@@ -9,8 +9,9 @@ import type FieldUpdate from "../models/FieldUpdate";
 import ContactSection from "../components/ContactSection";
 import './page.scss';
 import { useNavigate } from "react-router";
+import AddressEditDialog from "../components/AddressEditDialog";
+import { w100 } from "../constants/styles";
 
-const w100 = {width: '100%'};
 type contactSections = {
     phones: string[]
     emails: string[]
@@ -18,6 +19,7 @@ type contactSections = {
 }
 
 export default function ContactEditPage() {
+    const [addressDialogOpen, setAddressDialogOpen] = useState(false);
     const [contact, setContact] = useState({
         id: '',
         name: '',
@@ -32,6 +34,13 @@ export default function ContactEditPage() {
         })
     }
 
+    function onAddressDialogClose(value: Address | null) {
+        if (value)
+            setContact(Object.assign({}, contact, {addresses: [...contact.addresses, value]}));
+
+        setAddressDialogOpen(false);
+    }
+
     function update(contact: Contact, section: 'addresses' | 'emails' | 'phones'): FieldUpdate
     {
         return {
@@ -39,9 +48,7 @@ export default function ContactEditPage() {
                 var model: Partial<contactSections> = {};
 
                 if (section == 'addresses')
-                {
-                    alert('Não implementado')
-                }
+                    setAddressDialogOpen(true);
                 else
                 {
                     model[section] = [...(contact[section] ?? []), ''];
@@ -91,6 +98,7 @@ export default function ContactEditPage() {
                 </Grid>
             </Grid>
         </Container>
+        <AddressEditDialog onClose={onAddressDialogClose} open={addressDialogOpen} />
     </>;
 }
 
@@ -116,13 +124,13 @@ function PageAppHeader()
     );
 }
 
-interface IProfileSection
+interface ProfileSectionProps
 {
     name: string
     setName: (name: string) => void
 }
 
-function ProfileSection({name, setName}: IProfileSection)
+function ProfileSection({name, setName}: ProfileSectionProps)
 {
     return (
          <Card>
