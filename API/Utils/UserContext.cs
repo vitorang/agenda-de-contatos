@@ -10,6 +10,14 @@ namespace API.Utils
 {
     public class UserContext(IHttpContextAccessor httpContextAccessor, IOptions<JwtSettings> jwtSettings) : IUserContext
     {
+        public int ExpiryMinutes
+        {
+            get
+            {
+                return jwtSettings.Value.ExpiryMinutes;
+            }
+        }
+
         public string? CurrentUserId
         {
             get

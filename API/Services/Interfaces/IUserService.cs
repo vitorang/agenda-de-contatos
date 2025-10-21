@@ -6,7 +6,7 @@ namespace API.Services.Interfaces
     {
         public Task Create(LoginDto loginDto);
 
-        public Task<string> GetLoginToken(LoginDto loginDto);
+        public Task<AuthDto> GetLoginToken(LoginDto loginDto);
 
         public Task<bool> CheckUsernameInUse(string username);
     }

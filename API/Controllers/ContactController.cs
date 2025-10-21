@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +7,7 @@ namespace API.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class ContactController : ControllerBase
+    public class ContactController(IViaCepService viaCepService) : ControllerBase
     {
         [HttpGet]
         public IActionResult List()
@@ -30,6 +31,13 @@ namespace API.Controllers
         public IActionResult Save([FromBody] ContactDto contactDto)
         {
             throw new NotImplementedException();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> SearchAddress(string postalCode)
+        {
+            return Ok(await viaCepService.Search(postalCode));
         }
     }
 }

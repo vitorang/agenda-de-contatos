@@ -16,10 +16,10 @@ namespace API.Models
 
         public List<string> Emails { get; set; } = [];
 
-        public List<ContactAddresses> Addresses { get; set; } = [];
+        public List<ContactAddress> Addresses { get; set; } = [];
     }
 
-    public class ContactAddresses
+    public class ContactAddress
     {
         required public string State { get; set; }
 
@@ -29,7 +29,7 @@ namespace API.Models
 
         required public string Street { get; set; }
 
-        required public string Number { get; set; }
+        required public int Number { get; set; }
 
         required public string Complement { get; set; }
     }

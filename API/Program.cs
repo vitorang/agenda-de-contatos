@@ -17,10 +17,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowDevelopmentOrigins",
+    options.AddPolicy("Localhost",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000")
+            policy.WithOrigins("http://localhost:5000")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
@@ -32,7 +32,10 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.Scan(scan => scan
     .FromAssemblies(typeof(Program).Assembly)
-    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Service") || type.Name.EndsWith("Repository") || type.Name.EndsWith("Context")))
+    .AddClasses(classes => classes.Where(
+        type => type.Name.EndsWith("Service")
+            || type.Name.EndsWith("Repository")
+            || type.Name.EndsWith("Context")))
     .AsMatchingInterface()
     .WithScopedLifetime());
 
@@ -83,6 +86,8 @@ builder.Services.AddAuthorizationBuilder()
 
 
 var app = builder.Build();
+
+app.UseCors("Localhost");
 
 app.UseSwagger();
 

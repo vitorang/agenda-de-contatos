@@ -12,6 +12,6 @@ namespace API.DTOs
 
         required public List<string> Emails { get; set; }
 
-        required public List<ContactAddresses> Addresses { get; set; }
+        required public List<ContactAddress> Addresses { get; set; }
     }
 }

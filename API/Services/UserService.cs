@@ -37,7 +37,7 @@ namespace API.Services
             await userRepository.Create(user);
         }
 
-        public async Task<string> GetLoginToken(LoginDto loginDto)
+        public async Task<AuthDto> GetLoginToken(LoginDto loginDto)
         {
             var user = await userRepository.Find(username: loginDto.Username);
             
@@ -48,8 +48,12 @@ namespace API.Services
             }
 
             Validators.Found(nameof(loginDto.Username), loginDto.Username, user);
-            
-            return userContext.CreateAuthToken(user!.Id);
+
+            return new AuthDto
+            {
+                Token = userContext.CreateAuthToken(user!.Id),
+                ExpiryMinutes = userContext.ExpiryMinutes
+            };    
         }
 
         private static string CalculePasswordHash(string password, int salt)

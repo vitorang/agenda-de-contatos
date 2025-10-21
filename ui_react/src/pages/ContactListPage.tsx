@@ -10,8 +10,8 @@ import { useNavigate } from "react-router";
 
 
 export default function ContactListPage() {
-    const [status, setStatus] = useState(RequestStatus.LOADING);
-    const [contacts, setContacts] = useState([] as SimpleContact[]);
+    const [status, _setStatus] = useState(RequestStatus.LOADING);
+    const [contacts, _setContacts] = useState([] as SimpleContact[]);
    
 
     return <>

@@ -16,6 +16,12 @@ namespace API.Utils
 
     public static class Validators
     {
+        public static void Equals(string propertyName, bool value, bool expected)
+        {
+            if (value != expected)
+                throw new ApiException(Errors.NotEquals, $"{propertyName}='{value}' é diferente de {expected}.");
+        }
+
         public static void Found(string propertyName, string propertyValue, object? value)
         {
             if (value == null)

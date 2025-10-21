@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { type Address } from "../models/Contact";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, MenuItem, Stack, TextField } from "@mui/material";
 import { w100 } from "../constants/styles";
 import { Search } from "@mui/icons-material";
 import { neighborhoods } from "../constants/neighborhoods";
+import ContactService from "../services/ContactService";
+
 
 interface AddressEditDialogProps {
     onClose: (value: Address | null) => void
@@ -19,6 +21,16 @@ export default function AddressEditDialog({open, onClose} : AddressEditDialogPro
     var [number, setNumber] = useState('');
     var [complement, setComplement] = useState('');
 
+    useEffect(clear, [open]);
+
+    async function searchPostalCode(){
+        var service = new ContactService();
+        var result = (await service.searchAddress(postalCode)).data;
+        setState(result.state);
+        setCity(result.city);
+        setNeighborhood(result.neighborhood);
+        setStreet(result.street);
+    }
 
     function onNumberChange(value: string) {
         setNumber(value.replace(/\D/, ''));
@@ -42,7 +54,6 @@ export default function AddressEditDialog({open, onClose} : AddressEditDialogPro
             number: parseInt(number), 
         } as Address : null
 
-        clear();
         return onClose(address);
     }
 
@@ -66,7 +77,7 @@ export default function AddressEditDialog({open, onClose} : AddressEditDialogPro
                         <TextField label='Pesquisar CEP' variant='standard' sx={{flex: 1}}
                             inputMode='numeric' value={postalCode} slotProps={{htmlInput:{ maxLength: 8 }}}
                             onChange={e => onPostalCodeChange(e.target.value)} />
-                        <IconButton disabled={!isValidPostalCode()}>
+                        <IconButton disabled={!isValidPostalCode()} onClick={searchPostalCode}>
                             <Search/>
                         </IconButton>
                     </Box>
