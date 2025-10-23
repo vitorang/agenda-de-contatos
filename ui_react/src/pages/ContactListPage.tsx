@@ -12,7 +12,6 @@ import { useNavigate } from "react-router";
 export default function ContactListPage() {
     const [status, _setStatus] = useState(RequestStatus.LOADING);
     const [contacts, _setContacts] = useState([] as SimpleContact[]);
-   
 
     return <>
         <PageAppHeader />

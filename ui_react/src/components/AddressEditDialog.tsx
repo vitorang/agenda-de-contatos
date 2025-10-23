@@ -25,7 +25,7 @@ export default function AddressEditDialog({open, onClose} : AddressEditDialogPro
 
     async function searchPostalCode(){
         var service = new ContactService();
-        var result = (await service.searchAddress(postalCode)).data;
+        var result = await service.searchAddress(postalCode);
         setState(result.state);
         setCity(result.city);
         setNeighborhood(result.neighborhood);

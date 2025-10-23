@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 type queryParams = {[key: string]: string | number | boolean }
 
@@ -10,8 +10,16 @@ export default abstract class ApiService
 {
     private abortController = new AbortController();
 
-    protected setAuthToken(token: string) {
+    protected get authToken() {
+        return axios.defaults.headers.common['Authorization']?.toString() ?? '';
+    }
+
+    protected set authToken(token: string) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+
+    get config() {
+        return { timeout, signal: this.abortController.signal };
     }
 
     private apiUrl(path: string, params?: queryParams)
@@ -26,32 +34,29 @@ export default abstract class ApiService
     protected httpGet<T>(path: string, params?: queryParams)
     {
         var url = this.apiUrl(path, params);
-        return axios.get<T>(url, {
-            timeout,
-            signal: this.abortController.signal
-        });
+        return axios.get<T>(url, this.config);
     }
 
     protected httpPost<T>(path: string, body: unknown, params?: queryParams)
     {
         var url = this.apiUrl(path, params);
-        return axios.post<T>(url, {
-            body, timeout,
-            signal: this.abortController.signal, 
-        });
+        console.log(body)
+        return axios.post<T>(url, body, this.config);
     }
 
     protected httpDelete<T>(path: string, params?: queryParams)
     {
         var url = this.apiUrl(path, params);
-        return axios.delete<T>(url, {
-            timeout,
-            signal: this.abortController.signal, 
-        });
+        return axios.delete<T>(url, this.config);
     }
 
     abort()
     {
         this.abortController.abort();
+    }
+
+    axiosError(error: unknown)
+    {
+        return axios.isAxiosError(error) ? error as AxiosError : null;
     }
 }
