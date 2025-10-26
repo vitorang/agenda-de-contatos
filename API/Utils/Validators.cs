@@ -28,12 +28,10 @@ namespace API.Utils
                 throw new ApiException(Errors.NotFound, $"{propertyName}='{propertyValue}' não encontrado.");
         }
 
-        public static void IsOwner(string modelName, Func<string?> getEntityUserId)
+        public static void Owner(string modelName, string userId, string entityId)
         {
-            var userId = "0";
-            var entityUserId = getEntityUserId();
-            if (!string.IsNullOrEmpty(entityUserId) && userId != entityUserId)
-                throw new ApiException(Errors.NotOwner, $"Usuário='{userId}' não é proprietário de {modelName}='{entityUserId}'.");
+            if (!string.IsNullOrEmpty(entityId) && userId != entityId)
+                throw new ApiException(Errors.NotOwner, $"Usuário='{userId}' não é proprietário de {modelName}='{entityId}'.");
         }
 
         public static void Length(string propertyName, string value, int min, int max)

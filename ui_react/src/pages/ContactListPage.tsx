@@ -8,10 +8,9 @@ import RequestStatus from "../constants/RequestStatus";
 import './page.scss';
 import { useNavigate } from "react-router";
 import ContactService from "../services/ContactService";
-import { ContactServiceContext } from "../services/contexts";
 
 export default function ContactListPage() {
-    const [status, setStatus] = useState(RequestStatus.SUCCESS);
+    const [status, setStatus] = useState(RequestStatus.LOADING);
     const [contacts, setContacts] = useState([] as ListItem[]);
     const contactService = useRef(new ContactService());
 
@@ -30,13 +29,12 @@ export default function ContactListPage() {
         }
         catch (error)
         {
-            console.error(error);
             setStatus(RequestStatus.ERROR);
         }
     }
 
     return (
-        <ContactServiceContext.Provider value={contactService.current}>
+        <>
             <PageAppHeader />
             <Container maxWidth="md" className="pageMargin">
                 <Card>
@@ -45,7 +43,7 @@ export default function ContactListPage() {
                     </CardContent>
                 </Card>
             </Container>
-        </ContactServiceContext.Provider>
+        </>
     );
 }
 

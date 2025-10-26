@@ -1,6 +1,7 @@
 ﻿using API.Models;
 using API.Repositories.Interfaces;
 using API.Services.Interfaces;
+using API.Utils;
 using API.Utils.Interfaces;
 
 namespace API.Services
@@ -9,19 +10,29 @@ namespace API.Services
         IContactRepository contactRepository,
         IUserContext userContext) : IContactService
     {
-        public Task Delete(Contact contact)
+        private string UserId
         {
-            throw new NotImplementedException();
+            get
+            {
+                return userContext.CurrentUserId!;
+            }
         }
 
-        public Task<Contact> Get(Contact contact)
+        public async Task Delete(string contactId)
         {
-            throw new NotImplementedException();
+            await contactRepository.Delete(userId: UserId, contactId: contactId);
+        }
+
+        public async Task<Contact> Get(string contactId)
+        {
+            var contact = await contactRepository.Get(userId: UserId, contactId: contactId, withData: true);
+            Validators.Found(nameof(contactId), contactId, contact);
+            return contact!;
         }
 
         public async Task<List<Contact>> List()
         {
-            return await contactRepository.List(userId: userContext.CurrentUserId!);
+            return await contactRepository.List(userId: UserId);
         }
 
         public async Task Save(Contact contact)
@@ -31,8 +42,11 @@ namespace API.Services
             if (!string.IsNullOrEmpty(contact.Id))
             {
                 savedContact = await contactRepository.Get(
-                    userId: userContext.CurrentUserId!,
+                    userId: UserId,
                     contactId: contact.Id);
+
+                Validators.Found(nameof(contact.Id), contact.Id, savedContact);
+                Validators.Owner(nameof(Contact), UserId, savedContact!.UserId);
             }
 
             contact.SetIds(savedContact);

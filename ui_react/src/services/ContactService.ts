@@ -5,6 +5,16 @@ import ApiService from "./ApiService";
 
 export default class ContactService extends ApiService
 {
+    async delete(contactId: string)
+    {
+        await this.httpDelete<Contact>('contact/delete', { contactId });
+    }
+
+    async get(contactId: string)
+    {
+        return (await this.httpGet<Contact>('contact/get', { contactId })).data;
+    }
+
     async list()
     {
         return (await this.httpGet<ListItem[]>('contact/list')).data;

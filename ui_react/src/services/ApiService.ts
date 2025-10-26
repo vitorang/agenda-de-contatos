@@ -9,6 +9,8 @@ axios.interceptors.response.use((response) => response,
   async (error) => {
     if (error.response && error.response.status == 401)
         ApiService.onUnauthorized();
+    
+    throw error;
 });
 
 export default abstract class ApiService
@@ -16,12 +18,12 @@ export default abstract class ApiService
     private abortController = new AbortController();
     static onUnauthorized = () => {}
 
-    protected get authToken() {
+    protected static get authToken() {
         return axios.defaults.headers.common['Authorization']?.toString() ?? '';
     }
 
-    protected set authToken(token: string) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    protected static set authToken(token: string) {
+        axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : '';
     }
 
     get config() {

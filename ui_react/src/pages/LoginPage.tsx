@@ -52,7 +52,6 @@ export default function LoginPage() {
         }
         catch(error)
         {
-            console.error(error);
             var axError = accountService.current.axiosError(error);
             if (axError?.status == 404)
                 errors.push('Login incorreto')

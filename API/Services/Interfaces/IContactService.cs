@@ -6,9 +6,9 @@ namespace API.Services.Interfaces
     {
         public Task Save(Contact contact);
 
-        public Task Delete(Contact contact);
+        public Task Delete(string contactId);
 
-        public Task<Contact> Get(Contact contact);
+        public Task<Contact> Get(string contactId);
 
         public Task<List<Contact>> List();
     }

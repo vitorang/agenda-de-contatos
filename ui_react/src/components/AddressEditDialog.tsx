@@ -20,16 +20,24 @@ export default function AddressEditDialog({open, onClose} : AddressEditDialogPro
     var [street, setStreet] = useState('');
     var [number, setNumber] = useState('');
     var [complement, setComplement] = useState('');
+    var [postalCodeError, setPostalCodeError] = useState(false);
 
     useEffect(clear, [open]);
 
     async function searchPostalCode(){
         var service = new ContactService();
-        var result = await service.searchAddress(postalCode);
-        setState(result.state);
-        setCity(result.city);
-        setNeighborhood(result.neighborhood);
-        setStreet(result.street);
+        try {
+            var result = await service.searchAddress(postalCode);
+            setState(result.state);
+            setCity(result.city);
+            setNeighborhood(result.neighborhood);
+            setStreet(result.street);
+            setPostalCodeError(false);
+        }
+        catch
+        {
+            setPostalCodeError(true);
+        }
     }
 
     function onNumberChange(value: string) {
@@ -74,7 +82,7 @@ export default function AddressEditDialog({open, onClose} : AddressEditDialogPro
             <DialogContent>
                 <Stack spacing={2}>
                     <Box sx={{ display: 'flex' }}>
-                        <TextField label='Pesquisar CEP' variant='standard' sx={{flex: 1}}
+                        <TextField label='Pesquisar CEP' variant='standard' sx={{flex: 1}} error={postalCodeError}
                             inputMode='numeric' value={postalCode} slotProps={{htmlInput:{ maxLength: 8 }}}
                             onChange={e => onPostalCodeChange(e.target.value)} />
                         <IconButton disabled={!isValidPostalCode()} onClick={searchPostalCode}>

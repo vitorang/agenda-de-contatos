@@ -3,7 +3,7 @@ export default interface Contact
     id: string
     name: string
     emails: string[]
-    phones: string[]
+    phoneNumbers: string[]
     addresses: Address[]
 }
 

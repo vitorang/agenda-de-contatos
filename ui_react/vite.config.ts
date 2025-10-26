@@ -7,5 +7,8 @@ export default defineConfig({
     plugins: [plugin()],
     server: {
         port: 5633,
+    },
+    build: {
+        chunkSizeWarningLimit: 1000
     }
 })

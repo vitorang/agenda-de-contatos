@@ -8,7 +8,7 @@ namespace API.Repositories.Interfaces
 
         public Task Update(Contact contact);
 
-        public Task Delete(string contactId);
+        public Task Delete(string userId, string contactId);
 
         public Task<Contact?> Get(string userId, string contactId, bool withData = false);
 

@@ -22,15 +22,17 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(string contactId)
+        public async Task<IActionResult> Get(string contactId)
         {
-            throw new NotImplementedException();
+            var contact = await contactService.Get(contactId);
+            return Ok(contact.ToDto());
         }
 
         [HttpDelete]
-        public IActionResult Delete(string contactId)
+        public async Task<IActionResult> Delete(string contactId)
         {
-            throw new NotImplementedException();
+            await contactService.Delete(contactId);
+            return Ok();
         }
 
         [HttpPost]

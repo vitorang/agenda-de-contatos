@@ -1,5 +1,5 @@
 import { AppBar, Avatar, Card, CardContent, Container, Grid, IconButton, Stack, TextField, Toolbar, Typography } from "@mui/material";
-import { ChevronLeft, PersonRemove } from "@mui/icons-material";
+import { ChevronLeft, PersonRemove, Save } from "@mui/icons-material";
 import { type Address } from "../models/Contact";
 import Center from "../components/Center";
 import { useEffect, useRef, useState } from "react";
@@ -7,18 +7,19 @@ import type Contact from "../models/Contact";
 import type FieldUpdate from "../models/FieldUpdate";
 import ContactSection from "../components/ContactSection";
 import './page.scss';
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import AddressEditDialog from "../components/AddressEditDialog";
 import { w100 } from "../constants/styles";
 import ContactService from "../services/ContactService";
 
 type contactSections = {
-    phones: string[]
+    phoneNumbers: string[]
     emails: string[]
     addresses: Address[]
 }
 
 export default function ContactEditPage() {
+    const params = useParams();
     const contactService = useRef(new ContactService());
     const [addressDialogOpen, setAddressDialogOpen] = useState(false);
     const [contact, setContact] = useState({
@@ -26,7 +27,7 @@ export default function ContactEditPage() {
         name: '',
         addresses: [],
         emails: [],
-        phones: []
+        phoneNumbers: []
     } as Contact);
 
     useEffect(() => {
@@ -37,14 +38,11 @@ export default function ContactEditPage() {
 
     async function load()
     {
-        try
-        {
+        var { id } = params;
+        if (!id) return;
 
-        }
-        catch
-        {
-            
-        }
+        var contact = await contactService.current.get(id);
+        setContact(contact);
     }
     
     function onAddressDialogClose(value: Address | null) {
@@ -60,7 +58,7 @@ export default function ContactEditPage() {
         });
     }
 
-    function update(contact: Contact, section: 'addresses' | 'emails' | 'phones'): FieldUpdate
+    function update(contact: Contact, section: 'addresses' | 'emails' | 'phoneNumbers'): FieldUpdate
     {
         return {
             add: () => {
@@ -119,33 +117,25 @@ export default function ContactEditPage() {
                 id: contact.id,
                 name: contact.name.trim(),
                 addresses: contact.addresses,
-                emails: contact.emails,
-                phones: contact.phones
+                emails: contact.emails.map(e => e.trim()).filter(e => e),
+                phoneNumbers: contact.phoneNumbers.map(p => p.trim()).filter(p => p),
             });
 
             setData({id: saved.id});
         }
         catch (error)
         {
-            console.error(error);
+
         }
     }
 
     async function exclude()
     {
-        if (!canExclude)
-            return false;
+        if (!canExclude())
+            return;
+        
+        await contactService.current.delete(contact.id);
 
-        try
-        {
-
-            return true;
-        }
-        catch (error)
-        {
-            console.error(error);
-            return false;
-        }
     }
 
     return (
@@ -158,7 +148,7 @@ export default function ContactEditPage() {
                     </Grid>
                     <Grid size={{xs: 12, md: 5}}>
                         <Stack spacing={2}>
-                            <ContactSection type="phone" title="Telefones" values={contact.phones} update={update(contact, 'phones')} />
+                            <ContactSection type="phone" title="Telefones" values={contact.phoneNumbers} update={update(contact, 'phoneNumbers')} />
                             <ContactSection type="email" title="E-mails" values={contact.emails} update={update(contact, 'emails')} />
                         </Stack>
                     </Grid>
@@ -176,7 +166,7 @@ export default function ContactEditPage() {
 interface PageAppHeaderProps
 {
     save: () => Promise<void>
-    exclude: () => Promise<boolean>
+    exclude: () => Promise<void>
     canSave: boolean
     canExclude: boolean
 }
@@ -206,9 +196,15 @@ function PageAppHeader({ canSave, save, canExclude, exclude }: PageAppHeaderProp
             return;
 
         setLoading(true);
-        if (await exclude())
+        try
+        {
+            await exclude()
             goBack();
-        setLoading(false);
+        }
+        finally
+        {
+            setLoading(false);
+        }
     }
 
     return (
@@ -221,7 +217,7 @@ function PageAppHeader({ canSave, save, canExclude, exclude }: PageAppHeaderProp
                     Editar contato
                 </Typography>
                 <IconButton title="Gravar alterações" onClick={onClickSave} disabled={loading || !canSave}>
-                    <PersonRemove />
+                    <Save />
                 </IconButton>
                 <IconButton title="Excluir contato" onClick={onClickExclude} disabled={loading || !canExclude}>
                     <PersonRemove />
@@ -245,8 +241,8 @@ function ProfileSection({name, setData}: ProfileSectionProps)
                 <Center>
                     <Avatar sx={{ width: 96, height: 96, marginBottom: '1em' }} />    
                 </Center>
-                <TextField label='Nome' variant="standard" required={true} defaultValue={name} sx={w100} 
-                    onBlur={ event => setData({name: event.target.value}) }/>
+                <TextField label='Nome' variant="standard" required={true} value={name} sx={w100} 
+                    onChange={ event => setData({name: event.target.value}) }/>
             </CardContent>
         </Card>
     );

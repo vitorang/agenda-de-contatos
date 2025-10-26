@@ -46,8 +46,12 @@ var mongoSettings = builder.Configuration.GetSection("MongoDB").Get<MongoDBSetti
 builder.Services.AddSingleton<IMongoClient>(s =>
     new MongoClient(mongoSettings.ConnectionString));
 
-builder.Services.AddSingleton<IMongoDatabase>(s =>
+builder.Services.AddSingleton(s =>
     s.GetRequiredService<IMongoClient>().GetDatabase(mongoSettings.DatabaseName)
+);
+
+builder.Services.AddScoped(s =>
+    s.GetRequiredService<IMongoClient>().StartSession()
 );
 
 #endregion
