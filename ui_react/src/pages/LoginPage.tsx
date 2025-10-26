@@ -27,8 +27,6 @@ export default function LoginPage() {
             
             if (isRegister)
             {
-                console.log('register');
-
                 if (!username.match(/^[a-z0-9]{3,15}$/))
                     errors.push('Usuário deve ter de 3 a 15 letras e números');
 
@@ -54,6 +52,7 @@ export default function LoginPage() {
         }
         catch(error)
         {
+            console.error(error);
             var axError = accountService.current.axiosError(error);
             if (axError?.status == 404)
                 errors.push('Login incorreto')

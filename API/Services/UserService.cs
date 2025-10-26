@@ -3,7 +3,7 @@ using API.Models;
 using API.Repositories.Interfaces;
 using API.Services.Interfaces;
 using API.Utils;
-using API.Utils.Interface;
+using API.Utils.Interfaces;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;

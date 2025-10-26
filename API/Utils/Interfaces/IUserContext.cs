@@ -1,6 +1,6 @@
 ﻿using API.Models;
 
-namespace API.Utils.Interface
+namespace API.Utils.Interfaces
 {
     public interface IUserContext
     {

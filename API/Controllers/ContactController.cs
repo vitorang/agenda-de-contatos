@@ -1,5 +1,7 @@
 ﻿using API.DTOs;
+using API.Extensions;
 using API.Services.Interfaces;
+using API.Utils.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,12 +9,16 @@ namespace API.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class ContactController(IViaCepService viaCepService) : ControllerBase
+    public class ContactController(
+        IUserContext userContext,
+        IContactService contactService,
+        IViaCepService viaCepService) : ControllerBase
     {
         [HttpGet]
-        public IActionResult List()
+        public async Task<IActionResult> ListAsync()
         {
-            throw new NotImplementedException();
+            var contacts = await contactService.List();
+            return Ok(contacts.ToListDto());
         }
 
         [HttpGet]
@@ -28,9 +34,11 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save([FromBody] ContactDto contactDto)
+        public async Task<IActionResult> Save([FromBody] ContactDto contactDto)
         {
-            throw new NotImplementedException();
+            var model = contactDto.ToModel(userId: userContext.CurrentUserId!);
+            await contactService.Save(model);
+            return Ok(model.ToDto());
         }
 
         [AllowAnonymous]

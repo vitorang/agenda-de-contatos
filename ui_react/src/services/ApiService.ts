@@ -5,10 +5,16 @@ type queryParams = {[key: string]: string | number | boolean }
 const baseApiUrl = 'http://127.0.0.1/api/';
 const timeout = 30 * 1000;
 
+axios.interceptors.response.use((response) => response,
+  async (error) => {
+    if (error.response && error.response.status == 401)
+        ApiService.onUnauthorized();
+});
 
 export default abstract class ApiService
 {
     private abortController = new AbortController();
+    static onUnauthorized = () => {}
 
     protected get authToken() {
         return axios.defaults.headers.common['Authorization']?.toString() ?? '';
@@ -40,7 +46,6 @@ export default abstract class ApiService
     protected httpPost<T>(path: string, body: unknown, params?: queryParams)
     {
         var url = this.apiUrl(path, params);
-        console.log(body)
         return axios.post<T>(url, body, this.config);
     }
 
@@ -53,6 +58,7 @@ export default abstract class ApiService
     abort()
     {
         this.abortController.abort();
+        this.abortController = new AbortController();
     }
 
     axiosError(error: unknown)

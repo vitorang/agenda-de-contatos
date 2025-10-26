@@ -4,7 +4,7 @@ namespace API.Services.Interfaces
 {
     public interface IContactService
     {
-        public Task<Contact> Save(Contact contact);
+        public Task Save(Contact contact);
 
         public Task Delete(Contact contact);
 

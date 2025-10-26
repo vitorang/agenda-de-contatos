@@ -1,29 +1,52 @@
 import { AppBar, Avatar, Card, CardContent, Container, IconButton, List, ListItemAvatar, ListItemButton, ListItemText, Skeleton, Stack, Toolbar, Typography } from "@mui/material";
 import { ErrorOutline, PersonAdd, PlaylistRemove } from "@mui/icons-material";
 import AppHeaderMoreButton from "../components/AppHeaderMoreButton";
-import { useState } from "react";
-import type SimpleContact from "../models/SimpleContact";
+import { useEffect, useRef, useState } from "react";
+import type ListItem from "../models/ListItem";
 import Center from "../components/Center";
 import RequestStatus from "../constants/RequestStatus";
 import './page.scss';
 import { useNavigate } from "react-router";
-
+import ContactService from "../services/ContactService";
+import { ContactServiceContext } from "../services/contexts";
 
 export default function ContactListPage() {
-    const [status, _setStatus] = useState(RequestStatus.LOADING);
-    const [contacts, _setContacts] = useState([] as SimpleContact[]);
+    const [status, setStatus] = useState(RequestStatus.SUCCESS);
+    const [contacts, setContacts] = useState([] as ListItem[]);
+    const contactService = useRef(new ContactService());
 
-    return <>
-        <PageAppHeader />
-        <Container maxWidth="md" className="pageMargin">
-            <Card>
-                <CardContent>
-                    <ContactList contacts={contacts} status={status} />
-                </CardContent>
-            </Card>
-            
-        </Container>
-    </>;
+    useEffect(() => {
+        load();
+        
+        return () => contactService.current.abort();
+    }, []);
+
+    async function load()
+    {
+        try {
+            setStatus(RequestStatus.LOADING);
+            setContacts(await contactService.current.list());
+            setStatus(RequestStatus.SUCCESS);
+        }
+        catch (error)
+        {
+            console.error(error);
+            setStatus(RequestStatus.ERROR);
+        }
+    }
+
+    return (
+        <ContactServiceContext.Provider value={contactService.current}>
+            <PageAppHeader />
+            <Container maxWidth="md" className="pageMargin">
+                <Card>
+                    <CardContent>
+                        <ContactList contacts={contacts} status={status} />
+                    </CardContent>
+                </Card>
+            </Container>
+        </ContactServiceContext.Provider>
+    );
 }
 
 function PageAppHeader() {
@@ -46,7 +69,7 @@ function PageAppHeader() {
 
 interface ContactListProps
 {
-    contacts: SimpleContact[]
+    contacts: ListItem[]
     status: RequestStatus
 }
 
@@ -102,16 +125,16 @@ function ContactList({contacts, status}: ContactListProps) {
     return (
         <List>
             {
-                contacts.map((contact, index) => (
-                    <ListItemButton key={index} onClick={() => navigate(`./edit/${contact.id}`)}>
+                contacts.map(contact => (
+                    <ListItemButton key={contact.value} onClick={() => navigate(`./edit/${contact.value}`)}>
                         <ListItemAvatar>
                             <Avatar />
                         </ListItemAvatar>
                         
                         <ListItemText
-                            primary={<Typography noWrap={true}>{contact.name}</Typography>}
+                            primary={<Typography noWrap={true}>{contact.label}</Typography>}
                         />
-                    </ListItemButton>            
+                    </ListItemButton> 
                 ))
             }
         </List>

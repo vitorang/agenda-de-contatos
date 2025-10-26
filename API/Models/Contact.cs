@@ -16,5 +16,19 @@ namespace API.Models
 
         [BsonIgnore]
         public ContactData? Data { get; set; }
+
+        public void SetIds(Contact? contact)
+        {
+            if (contact == null)
+                return;
+
+            Id = contact.Id;
+
+            if (Data != null && contact.Data != null)
+            {
+                Data.Id = contact.Data.Id;
+                Data.ContactId = contact.Id;
+            }
+        }
     }
 }

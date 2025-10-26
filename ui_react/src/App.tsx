@@ -3,6 +3,7 @@ import ContactListPage from "./pages/ContactListPage";
 import LoginPage from "./pages/LoginPage";
 import ContactEditPage from "./pages/ContactEditPage";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import UnauthorizedRedirector from "./components/UnauthorizedRedirector";
 
 const darkTheme = createTheme({
   palette: {
@@ -15,6 +16,7 @@ export default function App() {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <BrowserRouter>
+        <UnauthorizedRedirector />
         <Routes>
           <Route path="/" element={<ContactListPage />} />
           <Route path="/login" element={<LoginPage />} />

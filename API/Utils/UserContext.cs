@@ -1,5 +1,5 @@
 ﻿using API.Models.ProgramSettings;
-using API.Utils.Interface;
+using API.Utils.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
