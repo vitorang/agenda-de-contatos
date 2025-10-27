@@ -15,7 +15,7 @@ export default function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <BrowserRouter>
+      <BrowserRouter basename="/react">
         <UnauthorizedRedirector />
         <Routes>
           <Route path="/" element={<ContactListPage />} />
