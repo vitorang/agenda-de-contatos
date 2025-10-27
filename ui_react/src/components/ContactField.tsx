@@ -21,13 +21,13 @@ export default function ContactField({type, value, index, update}: IContactField
 
     if (type == 'phone')
     {
-        child = <TextField variant='standard' defaultValue={value} placeholder='(00) 12345-6789' sx={w100}
-            onBlur={event => update?.edit(index, event.target.value)}/>
+        child = <TextField variant='standard' defaultValue={value} placeholder='Telefone' sx={w100}
+            onBlur={event => update?.edit(index, event.target.value)} />
             
     }
     else if (type == 'email')
     {
-        child = <TextField variant='standard' defaultValue={value} placeholder='contato@agenda.com' sx={w100}
+        child = <TextField variant='standard' defaultValue={value} placeholder='E-mail' sx={w100}
             onBlur={event => update?.edit(index, event.target.value)}/>
             
     }
