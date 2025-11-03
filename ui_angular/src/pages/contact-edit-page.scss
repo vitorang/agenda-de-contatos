@@ -1,0 +1,41 @@
+.content
+{
+    margin: 0 auto;
+    max-width: 900px;
+
+    display: grid;
+    grid-template-columns: 3fr 4fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "top top"
+        "left right";
+    gap: 10px;
+
+    @media (max-width: 900px)
+    {
+        grid-template-columns: initial;
+        grid-template-rows: initial;
+        grid-template-areas:
+            "top"
+            "left"
+            "right";
+    }
+}
+
+.profile-area
+{
+    grid-area: top;
+}
+
+.phone-email-area
+{
+    grid-area: left;
+
+    display: grid;
+    gap: 10px;
+}
+
+.addresses-area
+{
+    grid-area: right;
+}

@@ -1,1 +1,22 @@
-<h1>Login</h1>
+<div class="body">
+    <div class="center">
+        <div class="page-content-padding">
+            <mat-card class="content">
+                <mat-card-content>
+                    <mat-form-field class="w100">
+                        <mat-label>Nome de usuário</mat-label>
+                        <input [(ngModel)]="username" type="text" matInput>
+                    </mat-form-field>
+                    <mat-form-field class="w100">
+                        <mat-label>Senha</mat-label>
+                        <input type="password" matInput>
+                    </mat-form-field>
+                        <button matButton="filled" class="w100">{{'Entrar' | uppercase}}</button>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button matButton>{{'Cadastre-se' | uppercase }}</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

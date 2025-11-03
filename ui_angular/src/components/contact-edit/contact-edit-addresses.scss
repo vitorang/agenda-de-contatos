@@ -1,0 +1,26 @@
+.button-area
+{
+    margin-top: 16px;
+    text-align: center;
+}
+
+.item
+{
+    display: flex;
+    align-items: center;
+    
+    :first-child {
+        flex: 1;
+    }
+}
+
+.list
+{
+    display: grid;
+    gap: 10px;
+}
+
+.pre-wrap
+{
+    white-space: pre-wrap;
+}

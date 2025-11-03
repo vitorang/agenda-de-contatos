@@ -1,0 +1,32 @@
+.content
+{
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.loading
+{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.status-message
+{
+    $iconSize: 92px;
+
+    text-align: center;
+    opacity: 0.75;
+
+    > div
+    {
+        padding: 0.5em;
+    }
+
+    mat-icon
+    {
+        font-size: $iconSize;
+        height: $iconSize;    
+        width: $iconSize;
+    }
+}

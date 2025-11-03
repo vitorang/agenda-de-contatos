@@ -1,0 +1,23 @@
+<mat-card>
+    <mat-card-content>
+        <h6>Endereços</h6>
+        <div class="list">
+            <mat-card appearance="outlined" *ngIf="items.length == 0">
+                <mat-card-content>Nenhum valor cadastrado</mat-card-content>
+            </mat-card>
+
+            <mat-card appearance="outlined" *ngFor="let item of items">
+                <mat-card-content>
+                    <p class="pre-wrap">{{addressToString(item.value)}}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button matButton (click)="remove(item.key)">Remover</button>
+                </mat-card-actions>
+            </mat-card>
+
+            <div class="button-area">
+                <button matButton="filled" (click)="add()">Adicionar</button>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,16 +1,44 @@
 @use '@angular/material' as mat;
 
-html {
+@include mat.typography-hierarchy(
+  mat.define-theme(
+    (
+      typography: (
+        use-system-variables: true,
+        system-variables-prefix: mat-sys
+      )
+    )
+  )
+);
+
+html
+{
     color-scheme: light dark;
     @include mat.theme((
         color: mat.$violet-palette,
-        typography: Roboto,
-        density: 0
+        typography: 'Roboto, sans-serif',
+        density: 0,
     ));
 }
 
-body {
+body
+{
     background: var(--mat-sys-surface);
     color: var(--mat-sys-on-surface);
     margin: 0;
+}
+
+.w100
+{
+    width: 100%;
+}
+
+.page-content-padding
+{
+    padding: 1em;
+}
+
+.toolbar-spacer
+{
+    flex: 1 1 auto;
 }

@@ -1,1 +1,26 @@
-<h1>Edit</h1>
+<toolbar>
+    <button matIconButton title="Voltar" (click)="goBack()">
+        <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span>Meus Contatos</span>
+    <span class="toolbar-spacer"></span>
+    <button matIconButton title="Gravar alterações">
+        <mat-icon>save</mat-icon>
+    </button>
+    <button matIconButton title="Excluir contato">
+        <mat-icon>person_remove</mat-icon>
+    </button>
+</toolbar>
+
+<div class="content page-content-padding">
+    <div class="profile-area">
+        <contact-edit-profile/>
+    </div>
+    <div class="phone-email-area">
+            <contact-edit-others type="phone"/>
+            <contact-edit-others type="email"/>
+    </div>
+    <div class="addresses-area">
+        <contact-edit-addresses/>
+    </div>
+</div>

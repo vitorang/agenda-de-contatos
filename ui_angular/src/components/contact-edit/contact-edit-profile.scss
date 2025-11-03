@@ -1,0 +1,11 @@
+.icon-area
+{
+    text-align: center;
+    mat-icon
+    {
+        $iconSize: 90px;
+        font-size: $iconSize;
+        height: $iconSize;
+        width: $iconSize;
+    }
+}
