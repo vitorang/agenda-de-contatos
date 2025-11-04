@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 import { commonImports } from "../shared";
-import { Toolbar } from "../components/toolbar";
+import { PageContent } from "../components/page-content";
 
 @Component({
     selector: 'contact-list-page',
     templateUrl: './contact-list-page.html',
     styleUrl: './contact-list-page.scss',
-    imports: [commonImports, Toolbar]
+    imports: [commonImports, PageContent]
 
 })
 export class ContactListPage

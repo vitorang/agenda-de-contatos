@@ -1,4 +1,4 @@
-<toolbar>
+<mat-toolbar>
     <button matIconButton title="Voltar" (click)="goBack()">
         <mat-icon>chevron_left</mat-icon>
     </button>
@@ -10,9 +10,10 @@
     <button matIconButton title="Excluir contato">
         <mat-icon>person_remove</mat-icon>
     </button>
-</toolbar>
+</mat-toolbar>
 
-<div class="content page-content-padding">
+<page-content>
+    <div class="grid">
     <div class="profile-area">
         <contact-edit-profile/>
     </div>
@@ -23,4 +24,5 @@
     <div class="addresses-area">
         <contact-edit-addresses/>
     </div>
-</div>
+    </div>
+</page-content>

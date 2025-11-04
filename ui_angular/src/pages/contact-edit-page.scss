@@ -1,8 +1,5 @@
-.content
+.grid
 {
-    margin: 0 auto;
-    max-width: 900px;
-
     display: grid;
     grid-template-columns: 3fr 4fr;
     grid-template-rows: auto auto;

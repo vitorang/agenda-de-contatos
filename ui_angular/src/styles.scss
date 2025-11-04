@@ -26,6 +26,8 @@ body
     background: var(--mat-sys-surface);
     color: var(--mat-sys-on-surface);
     margin: 0;
+    overflow-y: hidden;
+    height: 100vh;
 }
 
 .w100
@@ -33,12 +35,17 @@ body
     width: 100%;
 }
 
-.page-content-padding
-{
-    padding: 1em;
-}
-
 .toolbar-spacer
 {
     flex: 1 1 auto;
 }
+
+.page
+{
+    .page-content
+    {
+        overflow-y: auto;
+        height: calc(100vh - 64px);
+    }
+}
+

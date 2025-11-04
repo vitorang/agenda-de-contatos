@@ -1,0 +1,12 @@
+.scroll-y
+{
+    overflow-y: auto;
+    height: calc(100vh - 64px);
+}
+
+.content-padding
+{
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 1em;
+}
