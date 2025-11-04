@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { commonImports } from "../shared";
+import { commonImports } from "../helpers/common-imports";
 import { PageContent } from "../components/page-content";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'contact-list-page',
@@ -11,5 +12,13 @@ import { PageContent } from "../components/page-content";
 })
 export class ContactListPage
 {
+    constructor(private router: Router){}
 
+    goToEdit(contactId?: string)
+    {
+        if (contactId)
+            this.router.navigate(['edit', contactId]);
+        else
+            this.router.navigate(['create']);
+    }
 }

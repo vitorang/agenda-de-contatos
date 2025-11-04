@@ -17,7 +17,6 @@ export interface Address
     complement: string
 }
 
-
 export function newAddress() {
     return {
         postalCode: '',

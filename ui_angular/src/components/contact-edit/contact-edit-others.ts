@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { commonImports } from "../../shared";
+import { commonImports } from "../../helpers/common-imports";
 import { KeyValueList } from "../../helpers/key-value-list";
 
 @Component({

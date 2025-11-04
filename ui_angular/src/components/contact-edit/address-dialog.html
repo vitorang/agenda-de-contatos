@@ -1,1 +1,53 @@
-<h1>Dialog</h1>
+<mat-dialog-content>    
+    <div class="flex-row ignore-media">
+        <mat-form-field class="w100">
+            <mat-label>CEP</mat-label>
+            <input [(ngModel)]="postalCode" type="number" matInput>
+        </mat-form-field>
+        <button matIconButton title="Pesquisar CEP"
+            (click)="searchPostalCode()"
+            [disabled]="isPostalCodeValid()">
+        <mat-icon>search</mat-icon>
+    </button>
+</div>
+
+<div class="flex-row">
+    <mat-form-field class="flex2 w100">
+        <mat-label>Cidade</mat-label>
+        <input [(ngModel)]="city" type="text" matInput>
+    </mat-form-field>
+    <mat-form-field class="flex1 w100">
+        <mat-label>UF</mat-label>    
+        <mat-select [(ngModel)]="state">
+            <mat-option *ngFor="let s of states" [value]="s">
+                {{ s }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<mat-form-field class="w100">
+    <mat-label>Bairro</mat-label>
+    <input [(ngModel)]="neighborhood" type="text" matInput>
+</mat-form-field>
+<mat-form-field class="w100">
+    <mat-label>Rua</mat-label>
+    <input [(ngModel)]="street" type="text" matInput>
+</mat-form-field>
+
+<div class="flex-row">
+    <mat-form-field class="flex1 w100">
+        <mat-label>Número</mat-label>
+        <input [(ngModel)]="number" type="number" min="1" matInput>
+    </mat-form-field>
+    <mat-form-field class="flex2 w100">
+        <mat-label>Complemento</mat-label>
+        <input [(ngModel)]="complement" type="text" matInput>
+    </mat-form-field>
+</div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button matButton="outlined" (click)="close(false)">Cancelar</button>
+    <button matButton="filled" [disabled]="!isAddressValid()" (click)="close(true)">Adicionar</button>
+</mat-dialog-actions>

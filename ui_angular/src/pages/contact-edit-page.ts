@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { commonImports } from "../shared";
-import { Location } from '@angular/common';
+import { commonImports } from "../helpers/common-imports";
 import { ContactEditAddresses } from "../components/contact-edit/contact-edit-addresses";
 import { ContactEditOthers } from "../components/contact-edit/contact-edit-others";
 import { ContactEditProfile } from "../components/contact-edit/contact-edit-profile";
 import { PageContent } from "../components/page-content";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'contact-edit-page',
@@ -14,13 +14,13 @@ import { PageContent } from "../components/page-content";
 })
 export class ContactEditPage
 {
-    constructor(private location: Location)
+    constructor(private router: Router)
     {
 
     }
 
     goBack()
     {
-        this.location.back();
+        this.router.navigate(['../']);
     }
 }

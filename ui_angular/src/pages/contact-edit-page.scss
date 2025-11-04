@@ -6,7 +6,7 @@
     grid-template-areas:
         "top top"
         "left right";
-    gap: 10px;
+    gap: 1em;
 
     @media (max-width: 900px)
     {
@@ -29,7 +29,7 @@
     grid-area: left;
 
     display: grid;
-    gap: 10px;
+    gap: 1em;
 }
 
 .addresses-area

@@ -1,7 +1,7 @@
 <mat-toolbar>
     <span>Meus Contatos</span>
     <span class="toolbar-spacer"></span>
-    <button matIconButton title="Adicionar contato">
+    <button matIconButton title="Adicionar contato" (click)="goToEdit()">
         <mat-icon>person_add</mat-icon>
     </button>
     <button matIconButton title="Sair">
@@ -32,7 +32,7 @@
             
             <div>
                 <mat-selection-list>
-                    <mat-list-item>
+                    <mat-list-item (click)="goToEdit('1')">
                         <mat-icon matListItemIcon>person</mat-icon>
                         <p>Contato</p>
                     </mat-list-item>

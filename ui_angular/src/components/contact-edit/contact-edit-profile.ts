@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { commonImports } from "../../shared";
+import { commonImports } from "../../helpers/common-imports";
 
 @Component({
     selector: 'contact-edit-profile',
