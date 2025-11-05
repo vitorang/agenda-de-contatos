@@ -4,7 +4,7 @@
     <button matIconButton title="Adicionar contato" (click)="goToEdit()">
         <mat-icon>person_add</mat-icon>
     </button>
-    <button matIconButton title="Sair">
+    <button matIconButton title="Sair" (click)="logout()">
         <mat-icon>logout</mat-icon>
     </button>
 </mat-toolbar>
@@ -12,41 +12,44 @@
 <page-content>
     <mat-card class="content">
         <mat-card-content>
-            <div class="loading">
-                <mat-spinner></mat-spinner>
-            </div>
-
-            <div class="status-message">
-                <div>
-                    <mat-icon>playlist_remove</mat-icon>
+            @if(status.loading)
+            {
+                <div class="loading">
+                    <mat-spinner></mat-spinner>
                 </div>
-                <div class="mat-typography">Nenhum contato encontrado</div>
-            </div>
-            
-            <div class="status-message">
-                <div>
-                    <mat-icon>error_outlined</mat-icon>
+            }
+            @else if(status.error)
+            {
+                <div class="status-message">
+                    <div>
+                        <mat-icon>error_outlined</mat-icon>
+                    </div>
+                    <div class="mat-typography">Ocorreu um erro</div>
                 </div>
-                <div class="mat-typography">Ocorreu um erro</div>
-            </div>
-            
-            <div>
-                <mat-selection-list>
-                    <mat-list-item (click)="goToEdit('1')">
-                        <mat-icon matListItemIcon>person</mat-icon>
-                        <p>Contato</p>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <mat-icon matListItemIcon>person</mat-icon>
-                        <p>Contato</p>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <mat-icon matListItemIcon>person</mat-icon>
-                        <p>Contato</p>
-                    </mat-list-item>
-                </mat-selection-list>
-            </div>
-            
+            }
+            @else if(contacts.length == 0)
+            {
+                <div class="status-message">
+                    <div>
+                        <mat-icon>playlist_remove</mat-icon>
+                    </div>
+                    <div class="mat-typography">Nenhum contato encontrado</div>
+                </div>
+            }
+            @else
+            {
+                <div>
+                    <mat-selection-list>
+                        @for (contact of contacts; track contact.value)
+                        {
+                            <mat-list-item (click)="goToEdit(contact.value)" class="item-list">
+                                <mat-icon matListItemIcon>person</mat-icon>
+                                <span matListItemTitle>{{contact.label}}</span>
+                            </mat-list-item>
+                        }
+                    </mat-selection-list>
+                </div>
+            }
         </mat-card-content>
     </mat-card>
 </page-content>

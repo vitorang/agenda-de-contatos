@@ -8,12 +8,17 @@
                 </mat-form-field>
                 <mat-form-field class="w100">
                     <mat-label>Senha</mat-label>
-                    <input type="password" matInput>
+                    <input [(ngModel)]="password" type="password" matInput>
                 </mat-form-field>
-                    <button matButton="filled" class="w100">{{'Entrar' | uppercase}}</button>
+                    <button matButton="filled" class="w100" (click)="submit()"
+                        [disabled]="loading || !username || !password">
+                        {{ (isRegister ? 'Registrar' : 'Entrar') | uppercase}}
+                    </button>
             </mat-card-content>
             <mat-card-actions>
-                <button matButton>{{'Cadastre-se' | uppercase }}</button>
+                <button matButton (click)="toggleRegister()" [disabled]="loading">
+                    {{ (isRegister ? 'Possui conta?' : 'Cadastre-se') | uppercase }}
+                </button>
             </mat-card-actions>
         </mat-card>
     </div>

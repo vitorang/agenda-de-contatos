@@ -1,5 +1,5 @@
 export const states = [
-  'AC',
+  'AC', 
   'AL',
   'AP',
   'AM',
@@ -27,3 +27,13 @@ export const states = [
   'SE',
   'TO'
 ];
+
+
+export enum RequestStatus
+{
+  LOADING,
+  LOADED,
+  ERROR
+}
+
+export const snackBarDuration = 5000;
