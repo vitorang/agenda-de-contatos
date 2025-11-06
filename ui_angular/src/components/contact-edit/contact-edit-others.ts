@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
 import { commonImports } from "../../helpers/common-imports";
 import { KeyValueList } from "../../helpers/key-value-list";
 
@@ -8,13 +8,13 @@ import { KeyValueList } from "../../helpers/key-value-list";
     styleUrl: './contact-edit-others.scss',
     imports: [commonImports]
 })
-export class ContactEditOthers
+export class ContactEditOthers implements OnChanges
 {
     @Input() type: 'email' | 'phone' = 'phone';
-    @Input() initialValues: string[] = [];
-    
-    @Output() change = new EventEmitter<string[]>();
-    
+    @Input() disabled = false;
+    @Input() value: string[] = [];
+    @Output() valueChange = new EventEmitter<string[]>();
+        
     titles = {
         'email': 'E-mails',
         'phone': 'Telefones'
@@ -25,30 +25,45 @@ export class ContactEditOthers
         'phone': 'Telefone'
     };
 
-    
     items = new KeyValueList<string>();
+
+    get validItems()
+    {
+        return this.items.values.filter(i => i.trim());
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['disabled'])
+            this.setItems();
+    }
 
     ngOnInit()
     {
-        for (var v in this.initialValues)
-            this.items.push(v);
+       this.setItems();
+    }
+
+    setItems()
+    {
+        this.items.clear();
+        for (var item of this.value)
+            this.items.push(item);
     }
 
     add()
     {
         this.items.push('');
-        this.change.emit(this.items.values);
+        this.valueChange.emit(this.validItems);
     }
 
     remove(key: string)
     {
         this.items.remove(key);
-        this.change.emit(this.items.values);
+        this.valueChange.emit(this.validItems);
     }
 
     onChange(key: string, value: string)
     {
         this.items.setValue(key, value);
-        this.change.emit(this.items.values);
+        this.valueChange.emit(this.validItems);
     }
 }

@@ -2,25 +2,31 @@
     <mat-card-content>
         <h6>{{ titles[type] }}</h6>
         <div class="spacing-v">
-            <mat-card appearance="outlined" *ngIf="items.length == 0">
-                <mat-card-content>
-                    Nenhum valor cadastrado
-                </mat-card-content>
-            </mat-card>
-
-            <div class="item" *ngFor="let v of items">
-                <mat-form-field >
-                    <mat-label>{{ labels[type] }}</mat-label>
-                    <input type="text" matInput [value]="items.getValue(v.key)"
-                        (change)="onChange(v.key, $event.target.value)"/>
-                </mat-form-field>
-                <button matIconButton title="Remover" (click)="remove(v.key)">
-                    <mat-icon>remove</mat-icon>
-                </button>
-            </div>            
-
+            @if (items.length == 0)
+            {
+                <mat-card appearance="outlined">
+                    <mat-card-content>
+                        Nenhum valor cadastrado
+                    </mat-card-content>
+                </mat-card>
+            }
+            
+            @for (item of items; track item.key)
+            {
+                <div class="item">
+                    <mat-form-field >
+                        <mat-label>{{ labels[type] }}</mat-label>
+                        <input type="text" matInput [value]="items.getValue(item.key)"
+                        (change)="onChange(item.key, $event.target.value)"/>
+                    </mat-form-field>
+                    <button matIconButton title="Remover" (click)="remove(item.key)" [disabled]="disabled">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                </div>            
+            }
+            
             <div class="button-area">
-                <button matButton="filled" (click)="add()">Adicionar</button>
+                <button matButton="filled" (click)="add()" [disabled]="disabled">Adicionar</button>
             </div>
         </div>
     </mat-card-content>

@@ -18,6 +18,11 @@ export class KeyValueList<T>
             this.items.splice(index, 1);
     }
 
+    clear()
+    {
+        this.items.splice(0);
+    }
+
     public *[Symbol.iterator](): Iterator<keyValue<T>> {
         for (let value of this.items)
             yield value;

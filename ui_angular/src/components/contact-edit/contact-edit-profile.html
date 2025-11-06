@@ -6,7 +6,7 @@
         <div>
              <mat-form-field class="w100">
                 <mat-label>Nome</mat-label>
-                <input type="text" matInput>
+                <input type="text" matInput [disabled]="disabled" [ngModel]="name" (ngModelChange)="nameChange.emit($event)">
             </mat-form-field>
         </div>
     </mat-card-content>

@@ -12,13 +12,13 @@
 <page-content>
     <mat-card class="content">
         <mat-card-content>
-            @if(status.loading)
+            @if (status.loading)
             {
                 <div class="loading">
                     <mat-spinner></mat-spinner>
                 </div>
             }
-            @else if(status.error)
+            @else if (status.error)
             {
                 <div class="status-message">
                     <div>
@@ -27,7 +27,7 @@
                     <div class="mat-typography">Ocorreu um erro</div>
                 </div>
             }
-            @else if(contacts.length == 0)
+            @else if (contacts.length == 0)
             {
                 <div class="status-message">
                     <div>

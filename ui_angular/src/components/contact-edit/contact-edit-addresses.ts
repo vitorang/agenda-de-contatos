@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
 import { commonImports } from "../../helpers/common-imports";
 import { Address } from "../../models/contact";
 import { KeyValueList } from "../../helpers/key-value-list";
@@ -11,12 +11,30 @@ import { AddressDialog } from "./address-dialog";
     styleUrl: './contact-edit-addresses.scss',
     imports: [commonImports]
 })
-export class ContactEditAddresses
+export class ContactEditAddresses implements OnChanges
 {
-    @Input() initialValues: Address[] = [];
-    @Output() change = new EventEmitter<Address[]>();
+    @Input() value: Address[] = [];
+    @Output() valueChange = new EventEmitter<Address[]>();
+    @Input() disabled = false;
     items = new KeyValueList<Address>();
     readonly dialog = inject(MatDialog);
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['disabled'])
+            this.setItems();
+    }
+
+    ngOnInit()
+    {
+       this.setItems();
+    }
+
+    setItems()
+    {
+        this.items.clear();
+        for (var item of this.value)
+            this.items.push(item);
+    }
     
     add()
     {
@@ -25,14 +43,17 @@ export class ContactEditAddresses
         });
         dialogRef.afterClosed().subscribe((address: Address | null) => {
             if (address)
+            {
                 this.items.push(address);
+                this.valueChange.emit(this.items.values);
+            }
         });
     }
     
     remove(key: string)
     {
         this.items.remove(key);
-        this.change.emit(this.items.values);
+        this.valueChange.emit(this.items.values);
     }
     
     addressToString(addr: Address)

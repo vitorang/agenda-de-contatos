@@ -10,7 +10,6 @@ const timeout = 30 * 1000;
 
 export default abstract class ApiService
 {   
-    protected static authToken = '';
     private subscriptions: Subscription[] = [];
     constructor(private httpClient: HttpClient, private router: Router) { }
     
@@ -23,6 +22,16 @@ export default abstract class ApiService
         headers = headers.set('Content-Type', 'application/json');
         
         return headers;
+    }
+
+    protected static get authToken()
+    {
+        return (window as any)._authToken ?? '';
+    }
+
+    protected static set authToken(token: string)
+    {
+        (window as any)._authToken = token;
     }
     
     get config() {

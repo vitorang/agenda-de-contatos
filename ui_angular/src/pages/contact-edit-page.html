@@ -4,25 +4,25 @@
     </button>
     <span>Editar Contato</span>
     <span class="toolbar-spacer"></span>
-    <button matIconButton title="Gravar alterações">
+    <button matIconButton title="Gravar alterações" [disabled]="disabled" (click)="save()">
         <mat-icon>save</mat-icon>
     </button>
-    <button matIconButton title="Excluir contato">
+    <button matIconButton title="Excluir contato" [disabled]="disabled || !contactId" (click)="exclude()">
         <mat-icon>person_remove</mat-icon>
     </button>
 </mat-toolbar>
 
 <page-content>
     <div class="grid">
-    <div class="profile-area">
-        <contact-edit-profile/>
-    </div>
-    <div class="phone-email-area">
-        <contact-edit-others type="phone"/>
-        <contact-edit-others type="email"/>
-    </div>
-    <div class="addresses-area">
-        <contact-edit-addresses/>
-    </div>
+        <div class="profile-area">
+            <contact-edit-profile [disabled]="disabled" [(name)]="contactName"/>
+        </div>
+        <div class="phone-email-area">
+            <contact-edit-others type="phone" [disabled]="disabled" [(value)]="phones"/>
+            <contact-edit-others type="email" [disabled]="disabled" [(value)]="emails"/>
+        </div>
+        <div class="addresses-area">
+            <contact-edit-addresses [disabled]="disabled" [(value)]="addresses"/>
+        </div>
     </div>
 </page-content>

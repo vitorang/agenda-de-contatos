@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { commonImports } from "../../helpers/common-imports";
 
 @Component({
@@ -9,5 +9,7 @@ import { commonImports } from "../../helpers/common-imports";
 })
 export class ContactEditProfile
 {
-    
+    @Input() disabled = false;
+    @Input() name = '';
+    @Output() nameChange = new EventEmitter<string>();
 }
