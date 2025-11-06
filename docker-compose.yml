@@ -14,6 +14,12 @@ services:
     build: ui_react
     expose:
       - "80"
+  
+
+  ui_angular:
+    build: ui_angular
+    expose:
+      - "80"
 
 
   nginx:
@@ -25,6 +31,7 @@ services:
     depends_on:
       - api
       - ui_react
+      - ui_angular
 
 
   mongo:
