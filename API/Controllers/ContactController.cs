@@ -2,36 +2,34 @@
 using API.Extensions;
 using API.Services.Interfaces;
 using API.Utils.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("[controller]/[action]")]
+    [Route("[controller]")]
     [ApiController]
     public class ContactController(
         IUserContext userContext,
-        IContactService contactService,
-        IViaCepService viaCepService) : ControllerBase
+        IContactService contactService) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> ListAsync()
         {
             var contacts = await contactService.List();
-            return Ok(contacts.ToListDto());
+            return Ok(contacts.OrderBy(c => c.Name).ToListDto());
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get(string contactId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
         {
-            var contact = await contactService.Get(contactId);
+            var contact = await contactService.Get(id);
             return Ok(contact.ToDto());
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(string contactId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
-            await contactService.Delete(contactId);
+            await contactService.Delete(id);
             return Ok();
         }
 
@@ -41,13 +39,6 @@ namespace API.Controllers
             var model = contactDto.ToModel(userId: userContext.CurrentUserId!);
             await contactService.Save(model);
             return Ok(model.ToDto());
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IActionResult> SearchAddress(string postalCode)
-        {
-            return Ok(await viaCepService.Search(postalCode));
         }
     }
 }

@@ -14,26 +14,26 @@ export default class ContactService extends ApiService
 
     async delete(contactId: string)
     {
-        await this.toPromise(this.httpDelete<Contact>('contact/delete', { contactId }));
+        await this.toPromise(this.httpDelete<Contact>(`contact/${contactId}`));
     }
 
     async get(contactId: string)
     {
-        return await this.toPromise(this.httpGet<Contact>('contact/get', { contactId }));
+        return await this.toPromise(this.httpGet<Contact>(`contact/${contactId}`));
     }
 
     async list()
     {
-        return await this.toPromise(this.httpGet<ListItem[]>('contact/list'));
+        return await this.toPromise(this.httpGet<ListItem[]>('contact'));
     }
 
     async save(contact: Contact)
     {
-        return await this.toPromise(this.httpPost<Contact>('contact/save', contact));
+        return await this.toPromise(this.httpPost<Contact>('contact', contact));
     }
 
     async searchAddress(postalCode: string)
     {
-        return await this.toPromise(this.httpGet<Address>('contact/searchAddress', { postalCode }));
+        return await this.toPromise(this.httpGet<Address>(`postalCode/${postalCode}`));
     }
 }
