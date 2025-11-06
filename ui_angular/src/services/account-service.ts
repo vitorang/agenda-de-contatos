@@ -4,29 +4,30 @@ import Login from "../models/login";
 import ApiService from "./api-service";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { LocalStorage } from "../helpers/local-storage";
 
 @Injectable()
 export class AccountService extends ApiService
 {
-    constructor(httpClient: HttpClient, router: Router){
-        super(httpClient, router);
+    constructor(httpClient: HttpClient, router: Router, storage: LocalStorage){
+        super(httpClient, router, storage);
     }
 
     async register(login: Login)
     {
         var result = await this.toPromise(this.httpPost<Auth>('account/register', login));
-        ApiService.authToken = result.token;
+        this.authToken = result.token;
     }
 
     async login(login: Login)
     {
         var result = (await this.toPromise(this.httpPost<Auth>('account/login', login)));
-        ApiService.authToken = result.token;
+        this.authToken = result.token;
     }
 
     logout()
     {
-        ApiService.authToken = '';
+        this.authToken = '';
         this.redirectToLogin();
     }
 

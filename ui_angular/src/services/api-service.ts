@@ -1,37 +1,43 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, finalize, Observable, Subscription } from 'rxjs';
+import { LocalStorage } from '../helpers/local-storage';
 
 type queryParams = {[key: string]: string | number | boolean }
 
 const baseApiUrl = 'http://127.0.0.1/api/';
 const timeout = 30 * 1000;
+const authTokenStorageKey = 'authToken';
 
 
 export default abstract class ApiService
 {   
     private subscriptions: Subscription[] = [];
-    constructor(private httpClient: HttpClient, private router: Router) { }
+    constructor(
+        private httpClient: HttpClient,
+        private router: Router,
+        private storage: LocalStorage) { }
     
     private getHeaders(extraHeaders?: HttpHeaders): HttpHeaders {
-        let headers = extraHeaders || new HttpHeaders();
-        
-        if (ApiService.authToken)
-            headers = headers.set('Authorization', `Bearer ${ApiService.authToken}`);
-        
+        var headers = extraHeaders || new HttpHeaders();
+
+        headers = headers.set('Authorization', `Bearer ${this.authToken}`);
         headers = headers.set('Content-Type', 'application/json');
         
         return headers;
     }
 
-    protected static get authToken()
+    protected get authToken()
     {
-        return (window as any)._authToken ?? '';
+        return this.storage.getItem(authTokenStorageKey) ?? '';
     }
 
-    protected static set authToken(token: string)
+    protected set authToken(token: string)
     {
-        (window as any)._authToken = token;
+        if (token)
+            this.storage.setItem(authTokenStorageKey, token);
+        else
+            this.storage.removeItem(authTokenStorageKey);
     }
     
     get config() {
@@ -49,7 +55,7 @@ export default abstract class ApiService
     
     protected redirectToLogin()
     {
-        ApiService.authToken = '';
+        this.authToken = '';
         this.router.navigate(['/login']);
     }
     

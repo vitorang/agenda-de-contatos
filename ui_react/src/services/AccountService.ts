@@ -7,18 +7,18 @@ export default class AccountService extends ApiService
     async register(login: Login)
     {
         var result = (await this.httpPost<Auth>('account/register', login)).data;
-        ApiService.authToken = result.token;
+        this.authToken = result.token;
     }
 
     async login(login: Login)
     {
         var result = (await this.httpPost<Auth>('account/login', login)).data;
-        ApiService.authToken = result.token;
+        this.authToken = result.token;
     }
 
     logout()
     {
-        ApiService.authToken = '';
+        this.authToken = '';
         ApiService.onUnauthorized();
     }
 

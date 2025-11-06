@@ -1,10 +1,11 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, type AxiosRequestConfig } from 'axios';
+import LocalStorage from '../helpers/LocalStorage';
 
 type queryParams = {[key: string]: string | number | boolean }
 
 const baseApiUrl = 'http://127.0.0.1/api/';
 const timeout = 30 * 1000;
-export const authTokenStorageKey = 'authToken';
+const authTokenStorageKey = 'authToken';
 
 axios.interceptors.response.use((response) => response,
   async (error) => {
@@ -17,18 +18,32 @@ axios.interceptors.response.use((response) => response,
 export default abstract class ApiService
 {
     private abortController = new AbortController();
+    private storage = new LocalStorage();
+
     static onUnauthorized = () => {}
 
-    protected static get authToken() {
-         return axios.defaults.headers.common['Authorization']?.toString() ?? '';
+    protected get authToken() {
+        return this.storage.getItem(authTokenStorageKey) ?? '';
     }
 
-    protected static set authToken(token: string) {
-        axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : '';
+    protected set authToken(token: string) {
+        if (token)
+            this.storage.setItem(authTokenStorageKey, token);
+        else
+            this.storage.removeItem(authTokenStorageKey);
+
+        axios.defaults.headers.common['Authorization'] =`Bearer ${token}`;
     }
 
     get config() {
-        return { timeout, signal: this.abortController.signal };
+        return {
+            timeout,
+            signal: this.abortController.signal,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this.authToken}`,
+            }
+        } as AxiosRequestConfig<any>;
     }
 
     private apiUrl(path: string, params?: queryParams)
