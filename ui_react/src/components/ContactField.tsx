@@ -2,7 +2,7 @@ import { Box, IconButton, TextField } from "@mui/material";
 import type { Address } from "../models/Contact"
 import type FieldUpdate from "../models/FieldUpdate";
 import { Remove } from "@mui/icons-material";
-import { w100 } from "../constants/styles";
+import { w100 } from "../helpers/constants";
 
 export type contactFieldType = 'phone' | 'email' | 'address'
 const boxSx = { display: 'flex', alignItems: 'flex-end', width: '100%' };

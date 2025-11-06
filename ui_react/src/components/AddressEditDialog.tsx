@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { type Address } from "../models/Contact";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, MenuItem, Stack, TextField } from "@mui/material";
-import { w100 } from "../constants/styles";
 import { Search } from "@mui/icons-material";
-import { neighborhoods } from "../constants/neighborhoods";
 import ContactService from "../services/ContactService";
+import { states, w100 } from "../helpers/constants";
 
 
 interface AddressEditDialogProps {
@@ -99,7 +98,7 @@ export default function AddressEditDialog({open, onClose} : AddressEditDialogPro
                             <TextField select label='Estado' value={state} onChange={e => setState(e.target.value)}
                                 variant='standard' required={true} sx={w100}>
                             {
-                                Object.entries(neighborhoods).map(n => (
+                                states.map(n => (
                                     <MenuItem key={n[0]} value={n[0]}>
                                         <Box sx={{display: { xs: 'none', sm: 'block' }}}>{n[0]}</Box> 
                                         <Box sx={{display: { xs: 'block', sm: 'none' }}}>{n[1]}</Box>

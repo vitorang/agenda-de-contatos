@@ -4,6 +4,7 @@ type queryParams = {[key: string]: string | number | boolean }
 
 const baseApiUrl = 'http://127.0.0.1/api/';
 const timeout = 30 * 1000;
+export const authTokenStorageKey = 'authToken';
 
 axios.interceptors.response.use((response) => response,
   async (error) => {
@@ -19,7 +20,7 @@ export default abstract class ApiService
     static onUnauthorized = () => {}
 
     protected static get authToken() {
-        return axios.defaults.headers.common['Authorization']?.toString() ?? '';
+         return axios.defaults.headers.common['Authorization']?.toString() ?? '';
     }
 
     protected static set authToken(token: string) {

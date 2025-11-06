@@ -9,8 +9,8 @@ import ContactSection from "../components/ContactSection";
 import './page.scss';
 import { useNavigate, useParams } from "react-router";
 import AddressEditDialog from "../components/AddressEditDialog";
-import { w100 } from "../constants/styles";
 import ContactService from "../services/ContactService";
+import { w100 } from "../helpers/constants";
 
 type contactSections = {
     phoneNumbers: string[]

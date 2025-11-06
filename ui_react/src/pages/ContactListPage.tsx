@@ -3,11 +3,11 @@ import { ErrorOutline, Logout, PersonAdd, PlaylistRemove } from "@mui/icons-mate
 import { useEffect, useRef, useState } from "react";
 import type ListItem from "../models/ListItem";
 import Center from "../components/Center";
-import RequestStatus from "../constants/RequestStatus";
 import './page.scss';
 import { useNavigate } from "react-router";
 import ContactService from "../services/ContactService";
 import AccountService from "../services/AccountService";
+import { RequestStatus } from "../helpers/constants";
 
 export default function ContactListPage() {
     const [status, setStatus] = useState(RequestStatus.LOADING);
