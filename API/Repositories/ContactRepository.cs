@@ -55,8 +55,7 @@ namespace API.Repositories
             {
                 await contactCollection.InsertOneAsync(contact, cancellationToken: ct);
 
-                contact.Data ??= new ContactData();
-                contact.Data.ContactId = contact.Id;
+                contact.Data ??= new ContactData { ContactId = contact.Id };
                 await contactDataCollection.InsertOneAsync(contact.Data, cancellationToken: ct);
 
                 return Task.FromResult(true);

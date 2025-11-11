@@ -10,7 +10,7 @@ namespace API.Models
         public string Id { get; set; } = string.Empty;
 
         [BsonRepresentation(BsonType.ObjectId)]
-        public string ContactId { get; set; } = string.Empty;
+        required public string ContactId { get; set; }
 
         public List<string> PhoneNumbers { get; set; } = [];
 

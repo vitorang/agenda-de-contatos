@@ -13,7 +13,7 @@ namespace API.Controllers
         IContactService contactService) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> ListAsync()
+        public async Task<IActionResult> List()
         {
             var contacts = await contactService.List();
             return Ok(contacts.OrderBy(c => c.Name).ToListDto());

@@ -3,16 +3,16 @@ using API.Models;
 using API.Services.Interfaces;
 using API.Utils;
 using Newtonsoft.Json;
-using System.Text.Json.Serialization;
 
 namespace API.Services
 {
     public class ViaCepService() : IViaCepService
     {
+        private readonly static HttpClient httpClient = new();
+
         public async Task<ContactAddress> Search(string postalCode)
         {
             var url = $"https://viacep.com.br/ws/{postalCode}/json/";
-            HttpClient httpClient = new();
             HttpResponseMessage response = await httpClient.GetAsync(url);
             Validators.Equals(nameof(response.IsSuccessStatusCode), response.IsSuccessStatusCode, true);
 

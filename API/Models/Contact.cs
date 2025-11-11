@@ -7,7 +7,7 @@ namespace API.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        required public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
 
         [BsonRepresentation(BsonType.ObjectId)]
         required public string UserId { get; set; }

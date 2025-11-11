@@ -11,7 +11,7 @@ namespace API.Controllers
     {
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var authToken = await userService.GetLoginToken(loginDto);
             return Ok(authToken);
@@ -19,7 +19,7 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> RegisterAsync([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Register([FromBody] LoginDto loginDto)
         {
             await userService.Create(loginDto);
 
