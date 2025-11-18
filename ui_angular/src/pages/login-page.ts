@@ -36,6 +36,14 @@ export class LoginPage
     {
         this.isRegister = !this.isRegister;
     }
+
+    get toggleButtonText() {
+        return this.isRegister ? 'Possui conta?' : 'Cadastre-se';
+    }
+
+    get submitButtonText() {
+        return this.isRegister ? 'Registrar' : 'Entrar';
+    }
     
     async submit()
     {

@@ -4,20 +4,20 @@
             <mat-card-content>
                 <mat-form-field class="w100">
                     <mat-label>Nome de usuário</mat-label>
-                    <input [(ngModel)]="username" type="text" matInput>
+                    <input [(ngModel)]="username" type="text" data-testid="username-input" matInput>
                 </mat-form-field>
                 <mat-form-field class="w100">
                     <mat-label>Senha</mat-label>
-                    <input [(ngModel)]="password" type="password" matInput>
+                    <input [(ngModel)]="password" type="password" data-testid="password-input" matInput>
                 </mat-form-field>
-                    <button matButton="filled" class="w100" (click)="submit()"
+                    <button matButton="filled" class="w100" (click)="submit()" data-testid="submit-button"
                         [disabled]="loading || !username || !password">
-                        {{ (isRegister ? 'Registrar' : 'Entrar') | uppercase}}
+                        {{ submitButtonText | uppercase}}
                     </button>
             </mat-card-content>
             <mat-card-actions>
-                <button matButton (click)="toggleRegister()" [disabled]="loading">
-                    {{ (isRegister ? 'Possui conta?' : 'Cadastre-se') | uppercase }}
+                <button matButton (click)="toggleRegister()" [disabled]="loading" data-testid="toggle-button">
+                    {{ toggleButtonText | uppercase }}
                 </button>
             </mat-card-actions>
         </mat-card>
