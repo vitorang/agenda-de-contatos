@@ -4,7 +4,7 @@
         <div class="spacing-v">
             @if (items.length == 0)
             {
-                <mat-card appearance="outlined">
+                <mat-card appearance="outlined" data-testid="no-items-warning">
                     <mat-card-content>
                         Nenhum valor cadastrado
                     </mat-card-content>
@@ -26,7 +26,7 @@
             }
             
             <div class="button-area">
-                <button matButton="filled" (click)="add()" [disabled]="disabled">Adicionar</button>
+                <button matButton="filled" (click)="add()" [disabled]="disabled" data-testid="add-button">Adicionar</button>
             </div>
         </div>
     </mat-card-content>
