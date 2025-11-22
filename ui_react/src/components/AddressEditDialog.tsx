@@ -99,10 +99,7 @@ export default function AddressEditDialog({open, onClose} : AddressEditDialogPro
                                 variant='standard' required={true} sx={w100}>
                             {
                                 states.map(n => (
-                                    <MenuItem key={n[0]} value={n[0]}>
-                                        <Box sx={{display: { xs: 'none', sm: 'block' }}}>{n[0]}</Box> 
-                                        <Box sx={{display: { xs: 'block', sm: 'none' }}}>{n[1]}</Box>
-                                    </MenuItem>
+                                    <MenuItem key={n} value={n}>{n}</MenuItem>
                                 ))
                             }
                         </TextField>
