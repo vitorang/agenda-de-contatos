@@ -11,7 +11,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ui_angular", "ui_angular\ui_angular.esproj", "{C91A2BF4-CB29-38A6-C9AF-B9D94EB6988A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Test", "..\API.Test\API.Test.csproj", "{5CBB4CDD-DCEC-450B-8B6D-DB6F0272CEF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Test", "API.Test\API.Test.csproj", "{F418CC7C-18CD-4D0D-83A9-C2F42E9C1826}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,10 @@ Global
 		{C91A2BF4-CB29-38A6-C9AF-B9D94EB6988A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C91A2BF4-CB29-38A6-C9AF-B9D94EB6988A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C91A2BF4-CB29-38A6-C9AF-B9D94EB6988A}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{5CBB4CDD-DCEC-450B-8B6D-DB6F0272CEF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CBB4CDD-DCEC-450B-8B6D-DB6F0272CEF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CBB4CDD-DCEC-450B-8B6D-DB6F0272CEF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CBB4CDD-DCEC-450B-8B6D-DB6F0272CEF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F418CC7C-18CD-4D0D-83A9-C2F42E9C1826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F418CC7C-18CD-4D0D-83A9-C2F42E9C1826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F418CC7C-18CD-4D0D-83A9-C2F42E9C1826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F418CC7C-18CD-4D0D-83A9-C2F42E9C1826}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
