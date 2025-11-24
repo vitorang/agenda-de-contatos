@@ -1,6 +1,8 @@
 # Agenda de contatos
 
-Projeto para fins de estudo com cadastro e autenticação de usuários, CRUD de contatos e consulta de API externa [ViaCEP](https://viacep.com.br). Ele usa as tecnologias:
+Projeto para fins de estudo com cadastro e autenticação de usuários, CRUD de contatos e consulta de API externa [ViaCEP](https://viacep.com.br). As capturas de telas do projeto estão na pasta **docs**.
+
+As tecnologias usada são:
 1. **ASP.NET**
 2. **MongoDB**
 3. **React.js** com [MUI - Material UI](https://mui.com/material-ui/getting-started/)
@@ -38,35 +40,3 @@ O site é acessível nas seguintes URLs:
 
 ### Planejado
 - Testes unitários do React com Jest
-
-
-## Imagens do projeto (Angular)
-### Login
-![Login](docs/angular-login.jpg)
-
-### Lista de contatos
-![Lista de contatos](docs/angular-listagem.jpg)
-
-### Cadastro de contato
-![Cadastro de contato](docs/angular-cadastro.jpg)
-
-### Pesquisa por CEP
-![Pesquisa por CEP](docs/angular-cep.jpg)
-
-
-## Imagens do projeto (React)
-### Login
-![Login](docs/react-login.jpg)
-
-### Lista de contatos
-![Lista de contatos](docs/react-listagem.jpg)
-
-### Cadastro de contato
-![Cadastro de contato](docs/react-cadastro.jpg)
-
-### Pesquisa por CEP
-![Pesquisa por CEP](docs/react-cep.jpg)
-
-
-## Documentação da API (Swagger)
-![Documentação da API](docs/swagger.jpg)
