@@ -56,7 +56,7 @@ namespace API.Services
             };    
         }
 
-        private static string CalculePasswordHash(string password, int salt)
+        public static string CalculePasswordHash(string password, int salt)
         {
             password = $"{salt}{password}{salt}";
             byte[] bytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
