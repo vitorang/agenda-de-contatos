@@ -1,5 +1,5 @@
 import { AppBar, Avatar, Card, CardContent, Container, IconButton, List, ListItemAvatar, ListItemButton, ListItemText, Skeleton, Stack, Toolbar, Typography } from "@mui/material";
-import { ErrorOutline, Logout, PersonAdd, PlaylistRemove } from "@mui/icons-material";
+import { ErrorOutline, Logout, PersonAdd, PlaylistRemove, SyncAlt } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
 import type ListItem from "../models/ListItem";
 import Center from "../components/Center";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import ContactService from "../services/ContactService";
 import AccountService from "../services/AccountService";
 import { RequestStatus } from "../helpers/constants";
+import switchToAngular from "../helpers/switchToAngular";
 
 export default function ContactListPage() {
     const [status, setStatus] = useState(RequestStatus.LOADING);
@@ -60,8 +61,11 @@ function PageAppHeader() {
                 <IconButton title="Adicionar contato" onClick={() => navigate('./create')}>
                     <PersonAdd/>
                 </IconButton>
+                <IconButton title="Mudar para Angular" onClick={switchToAngular}>
+                    <SyncAlt />
+                </IconButton>
                 <IconButton title="Sair" onClick={accountService.current.logout}>
-                    <Logout/>
+                    <Logout />
                 </IconButton>
             </Toolbar>
         </AppBar>

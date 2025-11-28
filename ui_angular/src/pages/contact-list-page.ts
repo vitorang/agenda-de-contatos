@@ -6,6 +6,7 @@ import ContactService from "../services/contact-service";
 import { AccountService } from "../services/account-service";
 import { RequestStatus } from "../helpers/constants";
 import ListItem from "../models/list-item";
+import _switchToReact from "../helpers/switch-to-react";
 
 @Component({
     selector: 'contact-list-page',
@@ -70,4 +71,6 @@ export class ContactListPage
     {
         this.accountService.logout();
     }
+
+    switchToReact = _switchToReact;
 }
