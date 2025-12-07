@@ -8,33 +8,19 @@ namespace API.Test.Services
 {
     public class UserServiceTests : ApiTest
     {
-        [Fact]
-        public async void Create_UsernameInvalido_Erro()
+        [Theory]
+        [InlineData("user name", "password")]
+        [InlineData("u", "password")]
+        [InlineData("username0123456789", "password")]
+        [InlineData("username", "p")]
+        [InlineData("username", "password0123456789")]
+        public async void Create_DadosInvalidos_Erro(string username, string password)
         {
-            var dto = GetValidLogin();
-            dto.Username = "user name";
-
-            await Assert.ThrowsAsync<ApiException>(() => userService.Create(dto));
-            userRepositoryMock.Verify(m => m.Find(It.IsAny<string>()), Times.Never);
-            userRepositoryMock.Verify(m => m.Create(It.IsAny<User>()), Times.Never);
-        }
-
-        [Fact]
-        public async void Create_UsernameTamanhoInvalido_Erro()
-        {
-            var dto = GetValidLogin();
-            dto.Username = "u";
-
-            await Assert.ThrowsAsync<ApiException>(() => userService.Create(dto));
-            userRepositoryMock.Verify(m => m.Find(It.IsAny<string>()), Times.Never);
-            userRepositoryMock.Verify(m => m.Create(It.IsAny<User>()), Times.Never);
-        }
-
-        [Fact]
-        public async void Create_PasswordTamanhoInvalido_Erro()
-        {
-            var dto = GetValidLogin();
-            dto.Password = "p";
+            var dto = new LoginDto
+            {
+                Password = password,
+                Username = username
+            };
 
             await Assert.ThrowsAsync<ApiException>(() => userService.Create(dto));
             userRepositoryMock.Verify(m => m.Find(It.IsAny<string>()), Times.Never);
@@ -98,7 +84,7 @@ namespace API.Test.Services
         }
 
         [Fact]
-        public async void GetLoginToken_RetornaAutenticacao()
+        public async void GetLoginToken_RetornaAutenticacao_Sucesso()
         {
             var dto = GetValidLogin();
             var salt = 1;

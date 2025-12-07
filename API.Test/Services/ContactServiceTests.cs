@@ -29,7 +29,7 @@ namespace API.Test.Services
 
 
         [Fact]
-        public async void Get_RetornaContato()
+        public async void Get_RetornaContato_Sucesso()
         {
             contactRepositoryMock.Setup(m => m.Get(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>()))
                 .ReturnsAsync(GetValidContact(CurrentUserId, "1"));
@@ -39,7 +39,7 @@ namespace API.Test.Services
         }
 
         [Fact]
-        public async void List_RetornaContatos()
+        public async void List_RetornaContatos_Sucesso()
         {
             var data = new List<Contact> {
                 GetValidContact(CurrentUserId, "0"),
