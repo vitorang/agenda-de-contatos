@@ -1,4 +1,4 @@
-﻿using API.DTOs;
+﻿using API.Clients.Interfaces;
 using API.Models;
 using API.Services.Interfaces;
 using API.Utils;
@@ -6,10 +6,8 @@ using Newtonsoft.Json;
 
 namespace API.Services
 {
-    public class ViaCepService() : IViaCepService
+    public class ViaCepService(IHttpClient httpClient) : IViaCepService
     {
-        private readonly static HttpClient httpClient = new();
-
         public async Task<ContactAddress> Search(string postalCode)
         {
             var url = $"https://viacep.com.br/ws/{postalCode}/json/";
@@ -17,9 +15,9 @@ namespace API.Services
             Validators.Equals(nameof(response.IsSuccessStatusCode), response.IsSuccessStatusCode, true);
 
             var result = await response.Content.ReadAsStringAsync();
-            var data = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(result) ?? [];
-            
-            Validators.Equals("erro", data.GetValueOrDefault("erro", false), false);
+            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(result) ?? [];
+
+            Validators.NotContainsKey(nameof(data), data, "erro");
 
             return new ContactAddress
             {
@@ -28,7 +26,7 @@ namespace API.Services
                 Neighborhood = data["bairro"],
                 Street = data["logradouro"],
                 Number = 0,
-                Complement = ""
+                Complement = string.Empty
             };
         }
     }

@@ -47,6 +47,12 @@ namespace API.Utils
             if (!regex.IsMatch(value))
                 throw new ApiException(Errors.InvalidValue, $"{propertyName} não atende ao padrão");
         }
+        
+        public static void NotContainsKey<T1, T2>(string propertyName, IDictionary<T1, T2> dictionary, T1 key)
+        {
+            if (dictionary.ContainsKey(key))
+                throw new ApiException(Errors.NotEquals, $"{propertyName} possui chave '{key}'.");
+        }
 
         public static void NotEmpty(string propertyName, string? value)
         {

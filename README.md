@@ -33,10 +33,11 @@ O site é acessível nas seguintes URLs:
 - Front-end Angular
 - Front-end React
 - Pesquisa com API externa ViaCEP
+- Testes unitários do ASP.NET com xUnit
 
 ### Em andamento
-- Testes unitários do ASP.NET com xUnit
 - Testes unitários do Angular com Jasmine
 
 ### Planejado
 - Testes unitários do React com Jest
+- Testes de integração com ASP.NET

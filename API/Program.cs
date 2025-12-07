@@ -40,7 +40,8 @@ builder.Services.Scan(scan => scan
     .AddClasses(classes => classes.Where(
         type => type.Name.EndsWith("Service")
             || type.Name.EndsWith("Repository")
-            || type.Name.EndsWith("Context")))
+            || type.Name.EndsWith("Context")
+            || type.Name.EndsWith("Client")))
     .AsMatchingInterface()
     .WithScopedLifetime());
 

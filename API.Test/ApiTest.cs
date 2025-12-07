@@ -1,3 +1,4 @@
+using API.Clients.Interfaces;
 using API.Controllers;
 using API.Repositories.Interfaces;
 using API.Services;
@@ -10,6 +11,7 @@ namespace API.Test
     public abstract class ApiTest
     {
         public readonly Mock<IUserContext> userContextMock = new();
+        public readonly Mock<IHttpClient> httpClientMock = new();
 
         public readonly Mock<IContactRepository> contactRepositoryMock = new();
         public readonly Mock<IUserRepository> userRepositoryMock = new();
@@ -30,7 +32,7 @@ namespace API.Test
         {
             contactService = new(contactRepository: contactRepositoryMock.Object, userContext: userContextMock.Object);
             userService = new(userRepository: userRepositoryMock.Object, userContext: userContextMock.Object);
-            viaCepService = new();
+            viaCepService = new(httpClient: httpClientMock.Object);
 
             accountController = new(userService: userServiceMock.Object);
             contactController = new(userContext: userContextMock.Object, contactService: contactServiceMock.Object);
