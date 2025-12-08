@@ -40,4 +40,4 @@ O site é acessível nas seguintes URLs:
 
 ### Planejado
 - Testes unitários do React com Jest
-- Testes de integração com ASP.NET
+- Testes de integração do ASP.NET
