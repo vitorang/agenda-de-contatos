@@ -47,7 +47,7 @@ builder.Services.Scan(scan => scan
 
 
 #region MongoDB
-var mongoSettings = builder.Configuration.GetSection("MongoDB").Get<MongoDBSettings>()!;
+var mongoSettings = builder.Configuration.GetSection("MongoDb").Get<MongoDbSettings>()!;
 
 builder.Services.AddSingleton<IMongoClient>(s =>
     new MongoClient(mongoSettings.ConnectionString));
@@ -114,3 +114,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
