@@ -36,8 +36,8 @@ O site é acessível nas seguintes URLs:
 - Testes unitários do ASP.NET com xUnit
 
 ### Em andamento
-- Testes unitários do Angular com Jasmine
+- Testes de integração do ASP.NET
 
 ### Planejado
 - Testes unitários do React com Jest
-- Testes de integração com ASP.NET
+- Testes unitários do Angular com Jasmine

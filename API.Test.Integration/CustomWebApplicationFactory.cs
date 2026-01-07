@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using API.DTOs;
+using API.Models;
+using API.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +13,8 @@ namespace API.Test.Integration
 {
     public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
+        const string databaseName = "agenda_de_contatos";
+
         private readonly MongoDbContainer mongoContainer = new MongoDbBuilder()
             .WithImage("mongo:latest")
             .WithReplicaSet()
@@ -19,6 +24,7 @@ namespace API.Test.Integration
         {
             await mongoContainer.StartAsync();
             await mongoContainer.ExecScriptAsync("rs.initiate();");
+            await AddInitialData();
         }
 
         public new async Task DisposeAsync()
@@ -41,9 +47,25 @@ namespace API.Test.Integration
                 config.AddInMemoryCollection(new Dictionary<string, string?>
                 {
                     ["MongoDb:ConnectionString"] = mongoContainer.GetConnectionString(),
-                    ["MongoDb:DatabaseName"] = "agenda_de_contatos"
+                    ["MongoDb:DatabaseName"] = databaseName
                 });
             });
+        }
+
+        private async Task AddInitialData()
+        {
+            var client = new MongoClient(mongoContainer.GetConnectionString());
+            var database = client.GetDatabase(databaseName);
+            var usersCollection = database.GetCollection<User>("users");
+
+            var user = new User
+            {
+                Salt = 1,
+                Username = "test",
+                PasswordHash = UserService.CalculePasswordHash("test", 1),
+            };
+
+            usersCollection.InsertOne(user);
         }
     }
 }
