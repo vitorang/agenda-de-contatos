@@ -39,5 +39,5 @@ O site é acessível nas seguintes URLs:
 - Testes de integração do ASP.NET
 
 ### Planejado
-- Testes unitários do React com Jest
 - Testes unitários do Angular com Jasmine
+- Testes unitários do React com Jest
