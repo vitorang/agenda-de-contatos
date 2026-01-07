@@ -1,6 +1,6 @@
 # Agenda de contatos
 
-Projeto para fins de estudo com cadastro e autenticação de usuários, CRUD de contatos e consulta de API externa [ViaCEP](https://viacep.com.br). As capturas de telas do projeto estão na pasta **docs**.
+Projeto para fins de estudo com cadastro e autenticação de usuários, CRUD de contatos e consulta de API externa [ViaCEP](https://viacep.com.br). Na pasta **docs** há capturas de telas.
 
 As tecnologias usada são:
 1. **ASP.NET**
@@ -9,14 +9,15 @@ As tecnologias usada são:
 4. **Angular 20** com [Angular Material](https://material.angular.dev)
 5. **Docker**
 6. **JWT**
-7. **Nginx** para arquivos estáticos e redirecionamento
+7. **Nginx**
 8. **Swagger**
-9. **xUnit** para testes unitários do ASP.NET
-10. **Jasmine** para testes unitários do Angular
+9. **xUnit**
+10. **Testcontainers**
+11. **Jasmine**
 
 
 ## Execução do projeto
-Para executar é necessário ter o **Docker Desktop**. Entre no diretório do projeto, execute o comando `docker compose up -d --build` e o servidor será iniciado na porta 80. Para parar, use o comando `docker compose down`.
+Para executar é necessário ter o **Docker Desktop**. Entre no diretório do projeto, execute o comando `docker compose up -d --build` e o servidor será iniciado na porta 80. Para interromper, use o comando `docker compose down`.
 
 
 O site é acessível nas seguintes URLs:
@@ -28,16 +29,10 @@ O site é acessível nas seguintes URLs:
 
 ## Progresso da implementação
 
-### Concluído
-- API em ASP.NET
-- Front-end Angular
-- Front-end React
-- Pesquisa com API externa ViaCEP
-- Testes unitários do ASP.NET com xUnit
-
-### Em andamento
-- Testes de integração do ASP.NET
-
-### Planejado
+- ✓ API em ASP.NET
+- ✓ Front-end Angular
+- ✓ Front-end React
+- ✓ Integração com API externa ViaCEP
+- ✓ Testes unitários do ASP.NET com xUnit
+- ✓ Testes de integração do ASP.NET com xUnit e Testcontainers 
 - Testes unitários do Angular com Jasmine
-- Testes unitários do React com Jest

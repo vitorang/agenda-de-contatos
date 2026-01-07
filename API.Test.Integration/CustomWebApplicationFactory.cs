@@ -24,7 +24,7 @@ namespace API.Test.Integration
         {
             await mongoContainer.StartAsync();
             await mongoContainer.ExecScriptAsync("rs.initiate();");
-            await AddInitialData();
+            InsertInitialData();
         }
 
         public new async Task DisposeAsync()
@@ -52,20 +52,26 @@ namespace API.Test.Integration
             });
         }
 
-        private async Task AddInitialData()
+        private void InsertInitialData()
         {
             var client = new MongoClient(mongoContainer.GetConnectionString());
             var database = client.GetDatabase(databaseName);
             var usersCollection = database.GetCollection<User>("users");
 
-            var user = new User
-            {
-                Salt = 1,
-                Username = "test",
-                PasswordHash = UserService.CalculePasswordHash("test", 1),
-            };
-
-            usersCollection.InsertOne(user);
+            usersCollection.InsertMany([
+                new User
+                {
+                    Salt = 1,
+                    Username = "test",
+                    PasswordHash = UserService.CalculePasswordHash("test", 1),
+                },
+                new User
+                {
+                    Salt = 1,
+                    Username = "test2",
+                    PasswordHash = UserService.CalculePasswordHash("test2", 1)
+                }
+            ]);
         }
     }
 }
